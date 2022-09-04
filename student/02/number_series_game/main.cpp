@@ -12,8 +12,12 @@ int main()
 
     while (number <= numbers) {
 
-        if (number % 3 == 0) {
+        if (number % 3 == 0 and number % 7 == 0) {
+            cout << "zip boing" <<endl;
+        } else if (number % 3 == 0) {
             cout << "zip" <<endl;
+        }  else if (number % 3 == 0) {
+            cout << "boing" <<endl;
         } else {
             cout << number <<endl;
         }
