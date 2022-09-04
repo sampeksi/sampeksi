@@ -12,7 +12,11 @@ int main()
 
     while (number <= numbers) {
 
-        cout << number <<endl;
+        if (number % 3 == 0) {
+            cout << "zip" <<endl;
+        } else {
+            cout << number <<endl;
+        }
         number += 1;
 
     }
