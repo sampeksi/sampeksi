@@ -37,7 +37,10 @@ int main()
 
     if (ball_total <= 0 or drawn_balls <= 0) {
         cout << "The number of balls must be a positive number." << endl;
-    } else {
+    } else if (ball_total == drawn_balls) {
+        cout << "The maximum number of drawn balls is the total amount of balls." << endl;
+    }
+    else {
         int difference = ball_total - drawn_balls;
         unsigned long int denominator = factorials(ball_total, drawn_balls, difference);
         cout << "The probability of guessing all " << drawn_balls << " balls correctly is ";
