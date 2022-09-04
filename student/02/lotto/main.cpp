@@ -40,7 +40,7 @@ int main()
     } else {
         int difference = ball_total - drawn_balls;
         unsigned long int denominator = factorials(ball_total, drawn_balls, difference);
-        cout << "The probability of guessing all " << ball_total << " balls correctly is ";
+        cout << "The probability of guessing all " << drawn_balls << " balls correctly is ";
         cout << "1/" << denominator << endl;
     }
     return 0;
