@@ -16,7 +16,7 @@ int main()
             cout << "zip boing" <<endl;
         } else if (number % 3 == 0) {
             cout << "zip" <<endl;
-        }  else if (number % 3 == 0) {
+        }  else if (number % 7 == 0) {
             cout << "boing" <<endl;
         } else {
             cout << number <<endl;
