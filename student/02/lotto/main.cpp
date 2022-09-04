@@ -28,7 +28,7 @@ int main()
 {
 
     int ball_total = 0;
-    cout << "Enter total number of lottery balls: ";
+    cout << "Enter the total number of lottery balls: ";
     cin >> ball_total;
 
     int drawn_balls = 0;
