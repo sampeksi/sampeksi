@@ -40,15 +40,26 @@ int tester(string key) {
             return EXIT_FAILURE;}
         }
 
+    string text = "";
+    cout << "Enter the text to be encrypted: ";
+    getline(cin, text);
+    int chars = text.length();
+
+    for (int index = 0; index < chars; ++index) {
+
+        char characterr = text.at(index);
+
+        if (islower(characterr) == 0) {
+            cout << "Error! The text to be encrypted must contain only lower case characters." <<endl;
+            return EXIT_FAILURE;}
+    }
+
     for (int index = 0; index < 26; ++index) {
         if (key.find(key.at(index), index+1) <= 26) {
             cout << "Error! The encryption key must contain all alphabets a-z." <<endl;
             return EXIT_FAILURE;
         }
     }
-    string text = "";
-    cout << "Enter the text to be encrypted: ";
-    getline(cin, text);
     encrypter(key, text);
     return EXIT_SUCCESS;
 }
@@ -61,6 +72,8 @@ int main()
     getline(cin, key);
 
     tester(key);
-
-    return 0;
+    if (tester(key) == EXIT_FAILURE) {
+        return EXIT_FAILURE;
+    } else {
+        return 0;}
 }
