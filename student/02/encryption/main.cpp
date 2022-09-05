@@ -22,29 +22,28 @@ void encrypter(string key, string text) {
 
 }
 
-void tester(string key) {
+int tester(string key) {
 
-    string::size_type characters = 0;
-    characters = key.length();
+    int characters = key.length();
 
     if (characters != 26) {
         cout << "Error! The encryption key must contain 26 characters." <<endl;
-        return;
+        return EXIT_FAILURE;
     }
 
-    for (int index = 0; index < 26; ++index) {
+    for (int index = 0; index < characters; ++index) {
 
         char character = key.at(index);
 
         if (islower(character) == 0) {
             cout << "Error! The encryption key must contain only lower case characters." <<endl;
-            return;}
+            return EXIT_FAILURE;}
         }
 
     for (int index = 0; index < 26; ++index) {
         if (key.find(key.at(index), index+1) <= 26) {
             cout << "Error! The encryption key must contain all alphabets a-z." <<endl;
-            return;
+            return EXIT_FAILURE;
         }
     }
     string text = "";
