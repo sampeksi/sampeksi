@@ -50,6 +50,7 @@ int tester(string key) {
     cout << "Enter the text to be encrypted: ";
     getline(cin, text);
     encrypter(key, text);
+    return EXIT_SUCCESS;
 }
 
 
