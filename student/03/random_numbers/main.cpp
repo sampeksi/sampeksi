@@ -6,7 +6,19 @@ using namespace std;
 
 void produce_random_numbers(unsigned int lower, unsigned int upper)
 {
-    // Implement your function here
+    int seed;
+    cout << "Enter a seed value: ";
+    cin >> seed;
+
+    string key = "s";
+    while (key != "q") {
+        default_random_engine gen(seed);
+        uniform_int_distribution<int> distr(lower, upper);
+        cout << "" <<endl;
+        cout << "Your drawn ramdom number is " << distr(gen) <<endl;
+        cout << "Press q to quit or any other key to continue: ";
+        cin >> key;
+    }
 }
 
 int main()
