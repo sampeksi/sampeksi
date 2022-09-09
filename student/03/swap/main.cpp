@@ -3,9 +3,9 @@
 
 // Write your swap function here.
 
-void swap(int i, int j) {
+void swap(int& i, int& j) {
     int k = i;
-    j = i;
+    i = j;
     j = k;
 
 
