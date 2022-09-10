@@ -3,13 +3,18 @@
 
 #include <string>
 
+using namespace std;
+
 class Account
 {
 public:
     // Constructor
     Account(const std::string& owner, bool has_credit = false);
 
-    // More methods
+    void set_credit_limit(int amount);
+    void save_money(int number);
+    void take_money(int taken);
+    void transfer_to(Account where, int transfer);
 
 private:
     // Generates IBAN (based on running_number_ below).
@@ -23,7 +28,11 @@ private:
     // no own copies of it for each object of the class.
     static int running_number_;
 
-    // More attributes/methods
+    string iban_;
+    string name_;
+    bool credits_;
+    int limit_;
+    int saved_money_ = 0;
 };
 
 #endif // ACCOUNT_HH
