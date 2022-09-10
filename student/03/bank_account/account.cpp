@@ -78,5 +78,5 @@ void Account::transfer_to(Account& where, int transfer)
 
 void Account::print() const
 {
-    cout << name_ <<" : "<< iban_ <<" : "<< balance_ <<" euros" <<endl;
+    cout << name_ <<" : "<< iban_ <<" : "<< balance_ << " euros" <<endl;
 }
