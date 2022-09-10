@@ -43,7 +43,7 @@ void Book::print()
         cout << "- available" <<endl;
     } else {
         cout << author_ << " : " << book_ <<endl;
-        cout << " - loaned: "; loaned_.print();
+        cout << "- loaned: "; loaned_.print();
         cout << "- to be returned: "; returned_.print();
 
     }
