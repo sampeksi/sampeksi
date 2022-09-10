@@ -3,6 +3,7 @@
 
 #include "date.hh"
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -19,6 +20,10 @@ public:
 private:
     string author_;
     string book_;
+    string status_ = "available";
+    Date loaned_;
+    Date returned_;
+
 };
 
 #endif // BOOK_HH
