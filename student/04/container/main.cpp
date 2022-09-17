@@ -21,7 +21,7 @@ bool same_values(vector<int> ints)
 {
     int length = ints.size();
 
-    for (int i = 0; i < length; ++i) {
+    for (int i = 0; i+1 < length; ++i) {
         if (ints.at(i) != ints.at(i+1) and i+1 < length) {
             return false; }}
     return true;
@@ -51,7 +51,10 @@ bool is_geometric_series(vector<int> ints)
 {
     int length =ints.size();
     for (int i = 0; i+2 < length; ++i) {
-        if (ints.at(i+1) / ints.at(i) != ints.at(i+2) / ints.at(i+1)) {
+        if (ints.at(i) == 0 or ints.at(i+1) == 0 or ints.at(i+2) == 0) {
+            return false;
+        }
+        else if (ints.at(i+1) / ints.at(i) != ints.at(i+2) / ints.at(i+1)) {
             return false;
         }
     } return true;
