@@ -40,8 +40,8 @@ bool is_ordered_non_strict_ascending(vector<int> ints)
 bool is_arithmetic_series(vector<int> ints)
 {
     int length =ints.size();
-    for (int i = 0; i+1 < length; ++i) {
-        if (ints.at(i+1) - i != ints.at(i+2) - ints.at(i+1)) {
+    for (int i = 0; i+2 < length; ++i) {
+        if (ints.at(i+1) - ints.at(i) != ints.at(i+2) - ints.at(i+1)) {
             return false;
         }
     } return true;
