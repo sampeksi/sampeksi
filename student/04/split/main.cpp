@@ -47,10 +47,11 @@ vector<string> split(string line, char sep, bool spaces = false)
                 chars += line.at(i);
         } if (i+2 == length) {
                 if (line.at(i+1) == sep) {
+                    if (chars != "") {
                     prints.push_back(chars);
-                    prints.push_back("");
+                    prints.push_back("");}
                 } else {
-                    chars = line.at(i+1);
+                    chars += line.at(i+1);
                     prints.push_back(chars);
                 }
             }
