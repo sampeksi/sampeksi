@@ -50,8 +50,6 @@ vector<string> split(string line, char sep, bool spaces = false)
                     prints.push_back(chars);
                     if (chars != "") {
                     prints.push_back("");}
-                    if (line.at(i-1) == sep and line.at(i) == sep) {
-                        prints.push_back("");}
                 } else {
                     chars += line.at(i+1);
                     prints.push_back(chars);
