@@ -18,8 +18,8 @@ int main()
     if (file_name) {
         int line = 1;
         string rivi;
+        ofstream file(output_file);
         while (getline(file_name, rivi)) {
-            ofstream file(output_file);
             file << line << " " << rivi <<endl;
             line += 1;
         }
