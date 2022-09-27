@@ -4,8 +4,7 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-        main.cpp \
-        strings.cpp
+        main.cpp
 
-HEADERS += \
-    strings.hh
+DISTFILES += \
+    read_text
