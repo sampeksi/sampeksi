@@ -19,12 +19,14 @@ int main()
         int line = 1;
         string rivi;
         while (getline(file_name, rivi)) {
-            cout << line << " " << rivi <<endl;
+            ofstream file(output_file);
+            file << line << " " << rivi <<endl;
             line += 1;
         }
         file_name.close();
     } else {
         cout << "Error! The file " << input_file <<
                 " cannot be opened." <<endl;
+        return EXIT_FAILURE;
     }
 }
