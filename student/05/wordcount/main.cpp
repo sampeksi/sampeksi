@@ -73,15 +73,18 @@ int main()
                 keys.push_back(key);
             }
         }
-        string key = line.substr(last_location,
+        string::size_type ind = line.length() -1;
+        if (line.at(ind) != ' ') {
+            string key = line.substr(last_location,
                                  line.length()-1);
 
-        if (details.find(key) != details.end()) {
-            details.at(key).at(0) += 1;
-            details.at(key).push_back(current_line);
-        } else {
-            details.insert({key, {1, current_line}});
-            keys.push_back(key);}
+            if (details.find(key) != details.end()) {
+                details.at(key).at(0) += 1;
+                details.at(key).push_back(current_line);
+            } else {
+                details.insert({key, {1, current_line}});
+                keys.push_back(key);}
+            }
         current_line += 1;
     } words.close();
 
