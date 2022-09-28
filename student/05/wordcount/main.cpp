@@ -32,7 +32,6 @@ string::size_type location(string line, int last_location)
     return location;
 }
 
-
 int main()
 {
     string input_file;
@@ -53,37 +52,36 @@ int main()
 
         int last_location = 0;
 
-
         while (location(line, last_location) != string::npos) {
             int length = location(line, last_location)- last_location;
 
-            if (location(line, last_location) != string::npos) {
-                string key = line.substr(last_location,
-                                         line.length()-1);
-            }
             string key = line.substr(last_location, length);
             last_location += (length+1);
 
-
             if (details.find(key) != details.end()) {
+
+                if (details.at(key).back() != current_line) {
+
                 details.at(key).at(0) += 1;
-                details.at(key).push_back(current_line);
+                details.at(key).push_back(current_line);}
             } else {
                 details.insert({key, {1, current_line}});
                 keys.push_back(key);
             }
         }
-        string::size_type ind = line.length() -1;
-        if (line.at(ind) != ' ') {
+            int word_length = line.length();
             string key = line.substr(last_location,
-                                 line.length()-1);
+                                 word_length);
 
             if (details.find(key) != details.end()) {
+
+                if (details.at(key).back() != current_line) {
                 details.at(key).at(0) += 1;
-                details.at(key).push_back(current_line);
+                details.at(key).push_back(current_line);}
+
             } else {
                 details.insert({key, {1, current_line}});
-                keys.push_back(key);}
+                keys.push_back(key);
             }
         current_line += 1;
     } words.close();
