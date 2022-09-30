@@ -8,6 +8,7 @@ using namespace std;
 
 bool palindrome_recursive(std::string s)
 {
+  RECURSIVE_FUNC
   if (s.length()== 0) {
       return true;
   }
@@ -17,7 +18,8 @@ bool palindrome_recursive(std::string s)
       return false;
   } else {
       s.erase(last_index);
-      return palindrome_recursive(s.erase(0,1 ));
+      s.erase(0, 1);
+      return palindrome_recursive(s);
   }
 }
 #ifndef UNIT_TESTING
