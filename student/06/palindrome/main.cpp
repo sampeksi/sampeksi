@@ -17,10 +17,8 @@ bool palindrome_recursive(std::string s)
       return false;
   } else {
       s.erase(last_index);
-      s.erase(0, 1);
-      return palindrome_recursive(s);
+      return palindrome_recursive(s.erase(0,1 ));
   }
-
 }
 #ifndef UNIT_TESTING
 int main()
