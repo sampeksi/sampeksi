@@ -2,6 +2,9 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <map>
+
+using namespace std;
 
 const std::string HELP_TEXT = "S = store id1 i2\nP = print id\n"
                               "C = count id\nD = depth id\n";
@@ -30,9 +33,22 @@ std::vector<std::string> split(const std::string& s,
     return result;
 }
 
+void print(map<string, vector<string>> people, string person, string points = "")
+{
+    if (people.find(person) == people.end()) {
+        cout << points << person <<endl;
+    } else {
+        cout << points;
+        cout << person <<endl;
+        points += "..";
+        for (string p : people.at(person)) {
+            print(people, p, points);
+        }
+    }
+}
 int main()
 {
-    // TODO: Implement the datastructure here
+    map<string, vector<string>> people;
 
 
     while(true)
@@ -60,7 +76,11 @@ int main()
             std::string id1 = parts.at(1);
             std::string id2 = parts.at(2);
 
-            // TODO: Implement the command here!
+            if (people.find(id1) != people.end()) {
+                people.at(id1).push_back(id2);
+            } else {
+                people.insert({id1, {id2}});
+            }
 
         }
         else if(command == "P" or command == "p")
@@ -72,7 +92,7 @@ int main()
             }
             std::string id = parts.at(1);
 
-            // TODO: Implement the command here!
+            print(people, id);
 
         }
         else if(command == "C" or command == "c")
