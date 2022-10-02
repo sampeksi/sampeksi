@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <utility>
+
 
 using namespace std;
 
@@ -33,6 +35,21 @@ std::vector<std::string> split(const std::string& s,
     return result;
 }
 
+bool is_in_people(map<string, vector<string>> people, string person)
+{
+    if (people.find(person) != people.end()) {
+        return true;
+    } else {
+        for (pair<string, vector<string>> p : people) {
+            for (string k : p.second) {
+                if (k == person) {
+                    return true;
+                }
+            }
+        }
+    } return false;
+}
+
 void print(map<string, vector<string>> people, string person, string points = "")
 {
     if (people.find(person) == people.end()) {
@@ -46,6 +63,36 @@ void print(map<string, vector<string>> people, string person, string points = ""
         }
     }
 }
+
+void help_counter(map<string, vector<string>> people, string person, int& count)
+{
+    if (people.find(person) != people.end()) {
+        for (string p : people.at(person)) {
+                help_counter(people, p, ++count);
+        }
+    }
+}
+
+void counter(map<string, vector<string>> people, string person)
+{
+    int count = 0;
+    if (people.find(person) != people.end()) {
+        for (string p : people.at(person)) {
+            help_counter(people, p, ++count);
+    }
+    } cout << count << endl;
+}
+
+int depth(map<string, vector<string>> people, string person)
+{
+    int count = 1;
+    if (people.find(person) != people.end()) {
+        for (string p : people.at(person)) {
+            return count + depth(people, p);
+        }
+    } return count;
+}
+
 int main()
 {
     map<string, vector<string>> people;
@@ -92,7 +139,13 @@ int main()
             }
             std::string id = parts.at(1);
 
-            print(people, id);
+            if (is_in_people(people, id)) {
+                print(people, id);
+            } else {
+                cout << id << endl;
+            }
+
+
 
         }
         else if(command == "C" or command == "c")
@@ -104,7 +157,12 @@ int main()
             }
             std::string id = parts.at(1);
 
-            // TODO: Implement the command here!
+            if (is_in_people(people, id)) {
+                counter(people, id);
+            } else {
+                cout << id << endl;
+            }
+
 
         }
         else if(command == "D" or command == "d")
@@ -115,8 +173,11 @@ int main()
                 continue;
             }
             std::string id = parts.at(1);
-
-            // TODO: Implement the command here!
+            if (is_in_people(people, id)) {
+                cout << depth(people, id) <<endl;
+            } else {
+                cout << id << endl;
+            }
 
         }
         else if(command == "Q" or command == "q")
