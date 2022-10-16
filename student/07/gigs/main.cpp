@@ -24,6 +24,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <utility>
 #include <fstream>
 #include <iostream>
 #include <cctype>
@@ -241,7 +242,6 @@ bool gigs_cancelled(multimap<string, vector<string>>& gig_calendar,
 
    return cancelled;
 }
-
 
 void print_artists(multimap<string, vector<string>> gig_calendar)
 {
