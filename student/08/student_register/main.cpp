@@ -160,6 +160,7 @@ int main() {
                 string number;
                 cout << "Enter a new phone number: ";
                 getline(cin, number);
+                cout << endl;
 
                 if (is_valid_phone_number(number)) {
                     student_numbers[parts[1]]->phone_number = number;
@@ -168,7 +169,7 @@ int main() {
                         change_number(*(pair.second), parts[1], number);
                     }
                     ofstream file(file_name);
-                    for (auto pair : student_numbers) {
+                    for (auto pair : user_ids) {
 
                         string id = pair.first;
                         const Student& s = *(pair.second);
