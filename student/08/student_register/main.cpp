@@ -174,8 +174,8 @@ int main() {
                         string id = pair.first;
                         const Student& s = *(pair.second);
 
-                        file<< id << ";" <<
-                               s.user_id << ";" <<
+                        file<< s.student_number << ";" <<
+                               id << ";" <<
                                s.name << ";" <<
                                s.phone_number << ";" <<
                                s.email << ";" <<
