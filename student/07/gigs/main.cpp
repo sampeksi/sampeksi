@@ -246,7 +246,7 @@ bool gigs_cancelled(multimap<string, vector<string>>& gig_calendar,
 void print_artists(multimap<string, vector<string>> gig_calendar)
 {
     string last_artist;
-    for (pair<string, vector<string>> artist : gig_calendar) {
+    for ( pair<string, vector<string>> artist : gig_calendar) {
         if (artist.first != last_artist) {
             cout << artist.first <<endl;
             last_artist = artist.first;
