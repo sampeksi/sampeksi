@@ -92,9 +92,11 @@ bool Cards::top_to_bottom(){
 
 void Cards::print_from_top_to_bottom(std::ostream &s) {
     Card_data* print_card = top_;
+    int line = 1;
     while (print_card != nullptr) {
-        s << print_card->data <<endl;
+        s << line << ": " <<print_card->data <<endl;
         print_card = print_card->next;
+        line += 1;
     }
 }
 

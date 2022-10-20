@@ -52,6 +52,7 @@ class Cards {
     private:
       Card_data* top_;
       Card_data* bottom_;
+      int line = 1;
 
 
       // You can use the function below in the implementation of
@@ -59,11 +60,13 @@ class Cards {
       int recursive_print(Card_data* top, std::ostream& s) {
 
           if (top->next == nullptr) {
-              s << top->data <<std::endl;
+              s << line << ": " << top->data <<std::endl;
+              line += 1;
               return top->data;
           } else {
               recursive_print(top->next, s);
-              s << top->data <<std::endl;
+              s << line<< ": " <<top->data <<std::endl;
+              line += 1;
               return top->data;
 
           }
