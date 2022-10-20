@@ -3,8 +3,6 @@
 
 #include <iostream>
 
-using namespace std;
-
 struct Card_data {
   int data;
   Card_data* next;
@@ -61,11 +59,11 @@ class Cards {
       int recursive_print(Card_data* top, std::ostream& s) {
 
           if (top->next == nullptr) {
-              s << top->data <<endl;
+              s << top->data <<std::endl;
               return top->data;
           } else {
               recursive_print(top->next, s);
-              s << top->data <<endl;
+              s << top->data <<std::endl;
               return top->data;
 
           }
