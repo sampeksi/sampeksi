@@ -40,6 +40,9 @@ void Cards::add(int id) {
     }
 
 }
+Card_data* Cards::get_topmost() {
+    return top_;
+}
 
 bool Cards::bottom_to_top() {
     if (top_ == nullptr) {
