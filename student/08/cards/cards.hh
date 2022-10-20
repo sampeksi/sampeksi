@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+using namespace std;
+
 struct Card_data {
   int data;
   Card_data* next;
@@ -51,10 +53,23 @@ class Cards {
 
     private:
       Card_data* top_;
+      Card_data* bottom_;
+
 
       // You can use the function below in the implementation of
       // the method print_from_bottom_to_top.
-      int recursive_print(Card_data* top, std::ostream& s);
+      int recursive_print(Card_data* top, std::ostream& s) {
+
+          if (top->next == nullptr) {
+              s << top->data <<endl;
+              return top->data;
+          } else {
+              recursive_print(top->next, s);
+              s << top->data <<endl;
+              return top->data;
+
+          }
+      }
 };
 
 #endif // CARDS_HH
