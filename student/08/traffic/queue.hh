@@ -52,7 +52,19 @@ private:
     // the same green period
     unsigned int cycle_;
 
-    // You can define more private features here
+    void dequeue() {
+
+        Vehicle* through = first_;
+
+        if ( first_ == last_ ) {
+           first_ = nullptr;
+           last_ = nullptr;
+        } else {
+           first_ = first_->next;
+        }
+        delete through;
+
+    }
 
 };
 
