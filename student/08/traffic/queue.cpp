@@ -24,26 +24,26 @@ void Queue::enqueue(const string &reg) {
         }
     } else {
         cout << "GREEN: The vehicle " << reg << " need not stop to wait" <<
-                endl <<endl;
+                endl;
     }
 }
 
 void Queue::print() const {
 
     if (is_green_ and first_ == nullptr) {
-        cout << "GREEN: No vehicles waiting in traffic lights" <<endl <<endl;
+        cout << "GREEN: No vehicles waiting in traffic lights" <<endl;
     } else {
         cout << "RED: ";
 
         if (first_ == nullptr) {
-            cout << "No vehicles waiting in traffic lights" <<endl <<endl;
+            cout << "No vehicles waiting in traffic lights" <<endl;
         } else {
             cout << "Vehicle(s) ";
             Vehicle* print = first_;
             while (print != nullptr) {
                 cout << print->reg_num << " ";
                 print = print->next;
-            } cout << "waiting in traffic lights" <<endl <<endl;
+            } cout << "waiting in traffic lights" <<endl;
         }
     }
 
@@ -59,13 +59,13 @@ void Queue::switch_light() {
             is_green_ = true;
             cout << "GREEN: ";
         }
-        cout << "No vehicles waiting in traffic lights" <<endl <<endl;
+        cout << "No vehicles waiting in traffic lights" <<endl;
     } else {
         if (!is_green_) {
             cout << "GREEN: ";
 
             if (first_ == nullptr) {
-                cout << "No vehicles waiting in traffic lights" <<endl <<endl;
+                cout << "No vehicles waiting in traffic lights" <<endl;
             } else {
                 cout << "Vehicle(s) ";
                 unsigned int count = 1;
@@ -79,7 +79,7 @@ void Queue::switch_light() {
                         print = print->next;
                         count += 1;
                     }
-                } cout <<"can go on " <<endl <<endl;
+                } cout <<"can go on " <<endl;
             }
 
             unsigned int c = 1;
