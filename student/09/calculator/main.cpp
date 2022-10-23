@@ -121,7 +121,7 @@ int main() {
                         cout << c.action(result1, result2) <<endl;
 
                     } else {
-                        cout << "a non-number operand." <<endl;
+                        cout << "Error: a non-number operand." <<endl;
                     }
                 } else {
                     cout << "Error: wrong number of parameters." <<endl;
@@ -129,12 +129,13 @@ int main() {
             }
             }
         if (!is_a_command) {
-            cout << "unknown command." <<endl;
+            cout << "Error: unknown command." <<endl;
         }
 
 
 
     }
+    return 0;
 }
 
 
