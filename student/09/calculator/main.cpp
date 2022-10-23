@@ -106,8 +106,13 @@ int main() {
                 is_a_command = true;
 
                 if (c.is_exit) {
-                    cout << "Thanks and see you later!" <<endl;
-                    break;
+
+                    if (c.parameter_number == pieces.size()-1) {
+                        cout << "Thanks and see you later!" <<endl;
+                        return 0;}
+                    else {
+                        cout << "Error: wrong number of parameters." <<endl;
+                    }
                 }
 
                 if (c.parameter_number == pieces.size()-1) {
