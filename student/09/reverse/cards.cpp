@@ -2,6 +2,7 @@
 #include <memory>
 #include "cards.hh"
 
+using namespace std;
 
 Cards::Cards(): top_( nullptr ) {
 }
@@ -24,8 +25,37 @@ void Cards::print(std::ostream& s) {
    }
 }
 
-// Tip for writing code more efficiently:
-// Do not write the stubs of the methods remove and reverse by yourself here,
-// but open the file cards.hh and click the declaration of the method
-// by the right mouse button and select
-// Refactor > Add definition in cards.cpp
+bool Cards::remove(int &id)
+{
+    if (top_ == nullptr) {
+        return false;
+    } else {
+        id = top_->data;
+        shared_ptr<Card_data> removed = top_;
+        if (top_->next == nullptr) {
+            top_ = nullptr;
+
+        } else {
+            top_ = top_->next;
+        }
+    }
+    return true;
+}
+
+void Cards::reverse()
+{
+    shared_ptr<Card_data> current = top_;
+    shared_ptr<Card_data> prev = nullptr;
+    shared_ptr<Card_data> next = nullptr;
+
+    while (current != nullptr) {
+
+        next = current->next;
+        current->next = prev;
+
+        prev = current;
+        current = next;
+    }
+    top_ = prev;
+}
+

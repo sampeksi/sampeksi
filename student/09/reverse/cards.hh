@@ -34,6 +34,8 @@ class Cards {
 
     private:
       std::shared_ptr<Card_data> top_;
+
+
 };
 
 #endif // CARDS_HH
