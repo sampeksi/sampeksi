@@ -110,10 +110,7 @@ int main() {
                     if (c.parameter_number == pieces.size()-1) {
                         cout << "Thanks and see you later!" <<endl;
                         return 0;}
-                    else {
-                        cout << "Error: wrong number of parameters." <<endl;
                     }
-                }
 
                 if (c.parameter_number == pieces.size()-1) {
 
