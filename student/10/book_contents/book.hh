@@ -38,6 +38,7 @@ struct Chapter
     int length_ = 0;
     Chapter* parentChapter_ = nullptr;
     std::vector<Chapter*> subchapters_;
+    bool open_  = true;
 };
 
 using IdSet = std::set<std::string>;
@@ -71,7 +72,7 @@ public:
     void printContents(Params params) const;
 
     // Closes the given chapter and its subchapters.
-    void close(Params params) const;
+    /*void close(Params params) const;
 
     // Opens the given chapter.
     void open(Params params) const;
@@ -107,12 +108,14 @@ public:
 
     // Prints the direct subchapters of the given chapter.
     // Students will not implement this method.
-    void printSubchapters(Params params) const;
+    void printSubchapters(Params params) const;*/
 
 private:
 
     std::vector<Chapter*> chapters;
 
+    void print_subchapters(std::vector<Chapter*> subs, int count = 1,
+                           std::string indent = "") const;
 
     /* The following functions are meant to make project easier.
      * You can implement them if you want and/or create your own.
