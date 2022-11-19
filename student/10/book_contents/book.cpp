@@ -102,6 +102,11 @@ void Book::open(Params params) const
     for (auto& chap : chapters) {
         if (chap->id_ == params[0]) {
             chap->open_ = true;
+            for (auto& sub : chap->subchapters_) {
+                if (sub->subchapters_.size()) {
+                    sub->open_ = true;
+                }
+            }
             break;
         }
     }
@@ -163,7 +168,7 @@ void Book::printSubchaptersN(Params params) const
             Chapter* Chap = findChapter(params[0]);
             
             if (Chap->subchapters_.size() == 0) {
-                cout << Chap->id_ << "has no subchapters." <<endl;
+                cout << Chap->id_ << " has no subchapters." <<endl;
             } else {
                 int levels = stoi(params[1]);
                 int count = 0;
@@ -205,17 +210,15 @@ void Book::printSiblingChapters(Params params) const
                     ids.insert(sub->id_);
                 }
             }
-        } else {
-            for (auto& C : chapters) {
-                if (C->parentChapter_ == nullptr && C->id_ != Chap->id_) {
-                    ids.insert(C->id_);
-                }
+            int size = ids.size();
+            cout << Chap->id_ << " has " << size << " sibling chapters:"
+                 <<endl;
+
+            for (auto& id : ids) {
+                cout << id <<endl;
             }
-        }
-        int size = ids.size();
-        cout << Chap->id_ << " has " << size << " sibling chapters:" <<endl;
-        for (auto& id : ids) {
-            cout << id <<endl;
+        } else {
+            cout << Chap->id_ << " has no sibling chapters." <<endl;
         }
 
     } else {
@@ -262,7 +265,7 @@ void Book::printLongestInHierarchy(Params params) const
         if (Longest->id_ != Chap->id_) {
         cout << "With the length of " << Longest->length_ << ", " <<
                 Longest->id_ << " is the longets chapter in "<< Chap->id_ <<
-                " hierarchy." <<endl;
+                "'s hierarchy." <<endl;
         } else {
             cout << "With the length of " << Longest->length_ << ", " <<
                    Longest->id_ << " is the longets chapter in "
@@ -299,7 +302,7 @@ void Book::printShortestInHierarchy(Params params) const
             if (Shortest->id_ != Chap->id_) {
             cout << "With the length of " << Shortest->length_ << ", " <<
                     Shortest->id_ << " is the shortest chapter in "<<
-                    Chap->id_ << " hierarchy." <<endl;
+                    Chap->id_ << "'s hierarchy." <<endl;
             } else {
                 cout << "With the length of " << Shortest->length_ << ", " <<
                        Shortest->id_ << " is the shortest chapter in "
