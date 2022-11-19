@@ -103,7 +103,7 @@ void Book::open(Params params) const
         if (chap->id_ == params[0]) {
             chap->open_ = true;
             for (auto& sub : chap->subchapters_) {
-                if (sub->subchapters_.size()) {
+                if (sub->subchapters_.size() == 0) {
                     sub->open_ = true;
                 }
             }
@@ -233,7 +233,8 @@ void Book::printTotalLength(Params params) const
         int length = Chap->length_;
         subchapter_length(Chap->subchapters_, length);
 
-        cout << "Total length of " << Chap->id_ << " is " << length <<endl;
+        cout << "Total length of " << Chap->id_ << " is "
+             << length << "."<<endl;
 
     }
     else {
@@ -264,11 +265,11 @@ void Book::printLongestInHierarchy(Params params) const
         }
         if (Longest->id_ != Chap->id_) {
         cout << "With the length of " << Longest->length_ << ", " <<
-                Longest->id_ << " is the longets chapter in "<< Chap->id_ <<
+                Longest->id_ << " is the longest chapter in "<< Chap->id_ <<
                 "'s hierarchy." <<endl;
         } else {
             cout << "With the length of " << Longest->length_ << ", " <<
-                   Longest->id_ << " is the longets chapter in "
+                   Longest->id_ << " is the longest chapter in "
                    "their hierarchy." <<endl;
         }
 
