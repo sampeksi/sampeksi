@@ -14,8 +14,8 @@ int greatest_v1(int *itemptr, int size)
 
 int greatest_v2(int *itemptr, int *endptr)
 {
-    sort(itemptr, itemptr);
-    return *(endptr-1);
+    int size = endptr - itemptr;
+    return greatest_v1(itemptr, size);
 }
 
 void copy(int *itemptr, int *endptr, int *targetptr)

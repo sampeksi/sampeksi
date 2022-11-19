@@ -21,7 +21,7 @@
 #include <iostream>
 #include <map>
 #include <algorithm>
-
+#include <map>
 
 // Named constants to improve readability in other modules
 const std::string EMPTY = "";
@@ -114,37 +114,31 @@ public:
 
 private:
 
+    // Data structure for chapters.
     std::vector<Chapter*> chapters;
 
+    // Helps with printing content.
     void print_subchapters(std::vector<Chapter*> subs, int count = 1,
                            std::string indent = "") const;
 
+    // Closes named subchapters.
     void close_subchapters(std::vector<Chapter*> subs) const;
 
+    // Recursive funktion for summing lengths of subchapters.
     void subchapter_length(std::vector<Chapter*> subs, int& length) const;
 
+    // Helps with looping subchapters.
+    // Returns vector with newly added subchapter ids.
+    // updates present subchapter vector for looping.
     std::vector<std::string> subchapters(std::vector<std::string> sub_ids,
                                       std::vector<Chapter*>& chap) const;
 
+    // Checks whether or not chapter exists
     bool does_exist(std::string id) const;
-
-
-    /* The following functions are meant to make project easier.
-     * You can implement them if you want and/or create your own.
-     * Anyway it would be a good idea to implement more functions
-     * to make things easier and to avoid "copy-paste-coding".
-     */
 
     // Returns a pointer for ID.
     Chapter* findChapter(const std::string& id) const;
 
-    // Prints the the data in a container.
-    void printGroup(const std::string& id, const std::string& group,
-                    const IdSet& container) const;
-
-    // Turns a vector of chapters to a set of IDs.
-    // Needed only for printSubchapters.
-    IdSet vectorToIdSet(const std::vector<Chapter*>& container) const;
 };
 
 #endif // BOOK_HH
