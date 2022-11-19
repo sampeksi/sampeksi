@@ -88,7 +88,7 @@ public:
 
     // Prints the amount and names of subchapters in given distance from
     // the given chapter. Subchapters are printed in alphabethical order.
-    /*void printSubchaptersN(Params params) const;
+    void printSubchaptersN(Params params) const;
 
     // Prints the sibling chapters of the given chapter, i.e. the chapters
     // sharing the parent chapter with the given one.
@@ -99,7 +99,7 @@ public:
     void printTotalLength(Params params) const;
 
     // Prints the longest chapter in the hierarchy of the given chapter.
-    void printLongestInHierarchy(Params params) const;
+    /*void printLongestInHierarchy(Params params) const;
 
     // Prints the shortest chapter in the hierarchy of the given chapter.
     void printShortestInHierarchy(Params params) const;
@@ -120,6 +120,11 @@ private:
                            std::string indent = "") const;
 
     void close_subchapters(std::vector<Chapter*> subs) const;
+
+    void subchapter_length(std::vector<Chapter*> subs, int& length) const;
+
+    std::vector<std::string> subchapters(std::vector<std::string> sub_ids,
+                                      std::vector<Chapter*>& chap) const;
 
     bool does_exist(std::string id) const;
 

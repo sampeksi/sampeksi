@@ -139,13 +139,101 @@ void Book::printParentsN(Params params) const
                     count += 1;
                 }
             }
+            if (count != 0) {
             cout << first_Chap->id_ << " has " << count <<
                     " parent chapters:" <<endl;
             for (auto& parent : parents) {
                 cout << parent <<endl;
             }
+            } else {
+                cout << first_Chap->id_ << " has no parent chapters." <<endl;
+            }
         }
     } else {
+        cout << "Error: Not found: " << params[0] <<endl;
+    }
+}
+
+void Book::printSubchaptersN(Params params) const
+{
+    if (does_exist(params[0])) {
+        if (stoi(params[1]) < 1) {
+            cout << "Error. Level can't be less than 1." <<endl;
+        } else {
+            Chapter* Chap = findChapter(params[0]);
+            
+            if (Chap->subchapters_.size() == 0) {
+                cout << Chap->id_ << "has no subchapters." <<endl;
+            } else {
+                int levels = stoi(params[1]);
+                int count = 0;
+
+                vector<Chapter*> Chaps = {Chap};
+                vector<string> ids;
+
+                while (count < levels and Chap->subchapters_.size() != 0) {
+                    cout << count <<endl;
+                    ids = subchapters(ids, Chaps);
+                    count += 1;
+                }
+                cout << Chap->id_ << " has " << ids.size() << " subchapters:"
+                        <<endl;
+
+                sort(ids.begin(), ids.end());
+                for (auto& id : ids) {
+                    cout << id <<endl;
+                }
+            }
+
+        }
+    } else {
+        cout << "Error: Not found: " << params[0] <<endl;
+    }
+}
+
+void Book::printSiblingChapters(Params params) const
+{
+    if (does_exist(params[0])) {
+        Chapter* Chap = findChapter(params[0]);
+        set<string> ids; {}
+
+        if (Chap->parentChapter_ != nullptr) {
+            Chapter* Parent = Chap->parentChapter_;
+
+            for (auto& sub : Parent->subchapters_) {
+                if (sub->id_ != Chap->id_) {
+                    ids.insert(sub->id_);
+                }
+            }
+        } else {
+            for (auto& C : chapters) {
+                if (C->parentChapter_ == nullptr && C->id_ != Chap->id_) {
+                    ids.insert(C->id_);
+                }
+            }
+        }
+        int size = ids.size();
+        cout << Chap->id_ << " has " << size << " sibling chapters:" <<endl;
+        for (auto& id : ids) {
+            cout << id <<endl;
+        }
+
+    } else {
+        cout << "Error: Not found: " << params[0] <<endl;
+    }
+}
+
+void Book::printTotalLength(Params params) const
+{
+    if (does_exist(params[0])) {
+        Chapter* Chap = findChapter(params[0]);
+        int length = Chap->length_;
+        subchapter_length(Chap->subchapters_, length);
+
+        cout << "Total length of " << Chap->id_ << " is " << length <<endl;
+
+    }
+    else {
         cout << "Error: Not found: " << params[0] <<endl;
     }
 }
@@ -181,6 +269,31 @@ void Book::close_subchapters(std::vector<Chapter *> subs) const
     }
 }
 
+void Book::subchapter_length(std::vector<Chapter *> subs, int &length) const
+{
+    for (auto& sub : subs) {
+        length += sub->length_;
+        if (sub->subchapters_.size() != 0) {
+            subchapter_length(sub->subchapters_, length);
+        }
+    }
+}
+
+std::vector<string> Book::subchapters(std::vector<string> sub_ids,
+                                         std::vector<Chapter *> &Chaps) const
+{
+    vector<Chapter*> newChaps;
+    for (auto& Chap : Chaps) {
+        for (auto& C : Chap->subchapters_) {
+            sub_ids.push_back(C->id_);
+            newChaps.push_back(C);
+        }
+    }
+    Chaps = newChaps;
+    return sub_ids;
+}
+
+
 bool Book::does_exist(std::string id) const
 {
     for (auto& chap : chapters) {
@@ -200,5 +313,13 @@ Chapter *Book::findChapter(const std::string &id) const
     } return nullptr;
 }
 
+IdSet Book::vectorToIdSet(const std::vector<Chapter *> &container) const
+{   
+    set<string> ids = {};
+    for (auto& chap : container) {
+        ids.insert(chap->id_);
+    }
+    return ids;
+}
 
 
