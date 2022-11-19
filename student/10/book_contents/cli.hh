@@ -100,10 +100,10 @@ private:
     std::vector<CommandInfo> COMMANDS = {
         {{"IDS","CHAPTERS"},"Chapters",{},-1,&Book::printIds},
         {{"CONTENTS","CONTS"},"Contents",{},-1,&Book::printContents},
-        /*{{"CLOSE","C"},"Close",{"chapter"},-1,&Book::close},
+        {{"CLOSE","C"},"Close",{"chapter"},-1,&Book::close},
         {{"OPEN","O"},"Open",{"chapter"},-1,&Book::open},
         {{"OPEN_ALL"},"Open all",{},-1,&Book::openAll},
-        {{"PARENTS","UP"},"Parents",{"chapter","level"},1,&Book::printParentsN},
+        /*{{"PARENTS","UP"},"Parents",{"chapter","level"},1,&Book::printParentsN},
         {{"SUBCHAPTERS","DOWN"},"Subchapters",{"chapter","level"},1,&Book::printSubchaptersN},
         {{"SIBLINGS","CO_CHAPTERS"},"Siblings",{"chapter"},-1,&Book::printSiblingChapters},
         {{"LENGTH","TOTAL"},"Length",{"chapter"},-1,&Book::printTotalLength},

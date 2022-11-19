@@ -72,7 +72,7 @@ public:
     void printContents(Params params) const;
 
     // Closes the given chapter and its subchapters.
-    /*void close(Params params) const;
+    void close(Params params) const;
 
     // Opens the given chapter.
     void open(Params params) const;
@@ -82,7 +82,7 @@ public:
 
     // Prints the amount and names of parent chapters in given distance from
     // the given chapter. Parent chapters are printed in alphabethical order.
-    void printParentsN(Params params) const;
+    /*void printParentsN(Params params) const;
 
     // Prints the amount and names of subchapters in given distance from
     // the given chapter. Subchapters are printed in alphabethical order.

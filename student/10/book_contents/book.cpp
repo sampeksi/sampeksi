@@ -76,6 +76,35 @@ void Book::printContents(Params params) const
     }
 }
 
+void Book::close(Params params) const
+{
+    for (auto& chap : chapters) {
+        if (chap->id_ == params[0]) {
+            chap->open_ = false;
+            break;
+        }
+    }
+}
+
+void Book::open(Params params) const
+{
+    for (auto& chap : chapters) {
+        if (chap->id_ == params[0]) {
+            chap->open_ = true;
+            break;
+        }
+    }
+}
+
+void Book::openAll(Params params) const
+{
+    vector<string> irrelevant = params;
+
+    for (auto& chap : chapters) {
+        chap->open_ = true;
+    }
+}
+
 void Book::print_subchapters(vector<Chapter*> subs,int count,
                              string indent) const
 {
