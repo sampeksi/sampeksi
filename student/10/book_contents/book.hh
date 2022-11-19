@@ -19,6 +19,8 @@
 #include <vector>
 #include <set>
 #include <iostream>
+#include <map>
+#include <algorithm>
 
 
 // Named constants to improve readability in other modules
@@ -82,11 +84,11 @@ public:
 
     // Prints the amount and names of parent chapters in given distance from
     // the given chapter. Parent chapters are printed in alphabethical order.
-    /*void printParentsN(Params params) const;
+    void printParentsN(Params params) const;
 
     // Prints the amount and names of subchapters in given distance from
     // the given chapter. Subchapters are printed in alphabethical order.
-    void printSubchaptersN(Params params) const;
+    /*void printSubchaptersN(Params params) const;
 
     // Prints the sibling chapters of the given chapter, i.e. the chapters
     // sharing the parent chapter with the given one.
@@ -116,6 +118,11 @@ private:
 
     void print_subchapters(std::vector<Chapter*> subs, int count = 1,
                            std::string indent = "") const;
+
+    void close_subchapters(std::vector<Chapter*> subs) const;
+
+    bool does_exist(std::string id) const;
+
 
     /* The following functions are meant to make project easier.
      * You can implement them if you want and/or create your own.

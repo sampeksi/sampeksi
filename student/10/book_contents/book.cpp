@@ -20,7 +20,12 @@ void Book::addNewChapter(const std::string &id,
 
     Chapter* new_chapter = new Chapter{id, fullName, length, nullptr, {}};
 
-    chapters.push_back(new_chapter);
+    if (!does_exist(new_chapter->id_)) {
+        chapters.push_back(new_chapter);
+    } else {
+        cout << "Error: Already exists." <<endl;
+    }
+
 }
 
 void Book::addRelation(const std::string &subchapter,
@@ -78,21 +83,30 @@ void Book::printContents(Params params) const
 
 void Book::close(Params params) const
 {
+    if (does_exist(params[0])) {
     for (auto& chap : chapters) {
         if (chap->id_ == params[0]) {
             chap->open_ = false;
+            close_subchapters(chap->subchapters_);
             break;
         }
+    }
+    } else {
+        cout << "Error: Not found: " << params[0] <<endl;
     }
 }
 
 void Book::open(Params params) const
 {
+    if (does_exist(params[0])) {
     for (auto& chap : chapters) {
         if (chap->id_ == params[0]) {
             chap->open_ = true;
             break;
         }
+    }
+    } else {
+        cout << "Error: Not found: " << params[0] <<endl;
     }
 }
 
@@ -102,6 +116,37 @@ void Book::openAll(Params params) const
 
     for (auto& chap : chapters) {
         chap->open_ = true;
+    }
+}
+
+void Book::printParentsN(Params params) const
+{
+    if (does_exist(params[0])) {
+        if (stoi(params[1]) < 1) {
+            cout << "Error. Level can't be less than 1." <<endl;
+        } else {
+            Chapter* Chap = findChapter(params[0]);
+            Chapter* first_Chap = Chap;
+            int count = 0;
+            set<string> parents = {};
+            while (count < stoi(params[1])) {
+                if (Chap->parentChapter_ == nullptr) {
+                    break;
+                }
+                else {
+                    Chap = Chap->parentChapter_;
+                    parents.insert(Chap->id_);
+                    count += 1;
+                }
+            }
+            cout << first_Chap->id_ << " has " << count <<
+                    " parent chapters:" <<endl;
+            for (auto& parent : parents) {
+                cout << parent <<endl;
+            }
+        }
+    } else {
+        cout << "Error: Not found: " << params[0] <<endl;
     }
 }
 
@@ -124,6 +169,26 @@ void Book::print_subchapters(vector<Chapter*> subs,int count,
             print_subchapters(sub->subchapters_, count, indent);
         } count += 1;
     }
+}
+
+void Book::close_subchapters(std::vector<Chapter *> subs) const
+{
+    for (auto& sub : subs) {
+        sub->open_ = false;
+        if (sub->subchapters_.size() != 0) {
+            close_subchapters(sub->subchapters_);
+        }
+    }
+}
+
+bool Book::does_exist(std::string id) const
+{
+    for (auto& chap : chapters) {
+        if (chap->id_ == id) {
+            return true;
+        }
+    }
+    return false;
 }
 
 Chapter *Book::findChapter(const std::string &id) const
