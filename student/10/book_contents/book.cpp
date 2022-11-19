@@ -298,8 +298,8 @@ void Book::printShortestInHierarchy(Params params) const
             }
             if (Shortest->id_ != Chap->id_) {
             cout << "With the length of " << Shortest->length_ << ", " <<
-                    Shortest->id_ << " is the shortest chapter in "<< Chap->id_ <<
-                    " hierarchy." <<endl;
+                    Shortest->id_ << " is the shortest chapter in "<<
+                    Chap->id_ << " hierarchy." <<endl;
             } else {
                 cout << "With the length of " << Shortest->length_ << ", " <<
                        Shortest->id_ << " is the shortest chapter in "
@@ -309,7 +309,19 @@ void Book::printShortestInHierarchy(Params params) const
 
         } else {
             cout << "Error: Not found: " << params[0] <<endl;
-        }
+    }
+}
+
+void Book::printParent(Params params) const
+{
+    Chapter* Chap = findChapter(params[0]);
+    cout << Chap->parentChapter_ <<endl;
+}
+
+void Book::printSubchapters(Params params) const
+{
+    Chapter* Chap = findChapter(params[0]);
+    cout << Chap->subchapters_[0] <<endl;
 }
 
 void Book::print_subchapters(vector<Chapter*> subs,int count,
@@ -395,5 +407,3 @@ IdSet Book::vectorToIdSet(const std::vector<Chapter *> &container) const
     }
     return ids;
 }
-
-

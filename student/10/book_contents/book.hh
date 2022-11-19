@@ -106,11 +106,11 @@ public:
 
     // Prints the direct parent chapter of the given chapter.
     // Students will not implement this method.
-    /*void printParent(Params params) const;
+    void printParent(Params params) const;
 
     // Prints the direct subchapters of the given chapter.
     // Students will not implement this method.
-    void printSubchapters(Params params) const;*/
+    void printSubchapters(Params params) const;
 
 private:
 
