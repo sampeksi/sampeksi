@@ -107,12 +107,12 @@ private:
         {{"SUBCHAPTERS","DOWN"},"Subchapters",{"chapter","level"},1,&Book::printSubchaptersN},
         {{"SIBLINGS","CO_CHAPTERS"},"Siblings",{"chapter"},-1,&Book::printSiblingChapters},
         {{"LENGTH","TOTAL"},"Length",{"chapter"},-1,&Book::printTotalLength},
-        /*{{"LONGEST","L"},"Longest",{"chapter"},-1,&Book::printLongestInHierarchy},
+        {{"LONGEST","L"},"Longest",{"chapter"},-1,&Book::printLongestInHierarchy},
         {{"SHORTEST","S"},"Shortest",{"chapter"},-1,&Book::printShortestInHierarchy},
         {{"QUIT","Q","EXIT"},"Quit",{},-1,nullptr},
         {{"HELP","H"},"Help",{"command"},-1,nullptr},
         {{"READ","READ_FROM","RF"},"Read",{"file_name"},-1,nullptr},
-        {{}, "",{},-1,nullptr}*/
+        {{}, "",{},-1,nullptr}
     };
 };
 

@@ -171,8 +171,7 @@ void Book::printSubchaptersN(Params params) const
                 vector<Chapter*> Chaps = {Chap};
                 vector<string> ids;
 
-                while (count < levels and Chap->subchapters_.size() != 0) {
-                    cout << count <<endl;
+                while (count < levels) {
                     ids = subchapters(ids, Chaps);
                     count += 1;
                 }
@@ -180,6 +179,7 @@ void Book::printSubchaptersN(Params params) const
                         <<endl;
 
                 sort(ids.begin(), ids.end());
+
                 for (auto& id : ids) {
                     cout << id <<endl;
                 }
@@ -236,6 +236,80 @@ void Book::printTotalLength(Params params) const
     else {
         cout << "Error: Not found: " << params[0] <<endl;
     }
+}
+
+void Book::printLongestInHierarchy(Params params) const
+{
+    if (does_exist(params[0])) {
+
+        Chapter* Chap = findChapter(params[0]);
+        vector<Chapter*> Chaps = {Chap};
+        vector<string> ids;
+
+
+        while (Chaps.size() != 0) {
+            ids = subchapters(ids, Chaps);
+        }
+        Chapter* Longest = Chap;
+
+        for (auto& id : ids) {
+
+            Chapter* currentChap = findChapter(id);
+            if (currentChap->length_ > Longest->length_) {
+                Longest = currentChap;
+            }
+        }
+        if (Longest->id_ != Chap->id_) {
+        cout << "With the length of " << Longest->length_ << ", " <<
+                Longest->id_ << " is the longets chapter in "<< Chap->id_ <<
+                " hierarchy." <<endl;
+        } else {
+            cout << "With the length of " << Longest->length_ << ", " <<
+                   Longest->id_ << " is the longets chapter in "
+                   "their hierarchy." <<endl;
+        }
+
+
+    } else {
+        cout << "Error: Not found: " << params[0] <<endl;
+    }
+}
+
+void Book::printShortestInHierarchy(Params params) const
+{
+    if (does_exist(params[0])) {
+
+            Chapter* Chap = findChapter(params[0]);
+            vector<Chapter*> Chaps = {Chap};
+            vector<string> ids;
+
+
+            while (Chaps.size() != 0) {
+                ids = subchapters(ids, Chaps);
+            }
+            Chapter* Shortest = Chap;
+
+            for (auto& id : ids) {
+
+                Chapter* currentChap = findChapter(id);
+                if (currentChap->length_ < Shortest->length_) {
+                    Shortest = currentChap;
+                }
+            }
+            if (Shortest->id_ != Chap->id_) {
+            cout << "With the length of " << Shortest->length_ << ", " <<
+                    Shortest->id_ << " is the shortest chapter in "<< Chap->id_ <<
+                    " hierarchy." <<endl;
+            } else {
+                cout << "With the length of " << Shortest->length_ << ", " <<
+                       Shortest->id_ << " is the shortest chapter in "
+                       "their hierarchy." <<endl;
+            }
+
+
+        } else {
+            cout << "Error: Not found: " << params[0] <<endl;
+        }
 }
 
 void Book::print_subchapters(vector<Chapter*> subs,int count,

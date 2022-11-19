@@ -99,14 +99,14 @@ public:
     void printTotalLength(Params params) const;
 
     // Prints the longest chapter in the hierarchy of the given chapter.
-    /*void printLongestInHierarchy(Params params) const;
+    void printLongestInHierarchy(Params params) const;
 
     // Prints the shortest chapter in the hierarchy of the given chapter.
     void printShortestInHierarchy(Params params) const;
 
     // Prints the direct parent chapter of the given chapter.
     // Students will not implement this method.
-    void printParent(Params params) const;
+    /*void printParent(Params params) const;
 
     // Prints the direct subchapters of the given chapter.
     // Students will not implement this method.
