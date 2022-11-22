@@ -28,9 +28,10 @@ void MainWindow::on_countPushButton_clicked()
     unsigned int E = ui->spinBoxE->value();
 
     unsigned int grade = count_final_grade(N, G, P, E);
-    QString moi;
+    QString answer = "Total grade: ";
+    answer += QString::number(grade);
 
-    ui->textBrowser->setText("Total grade: ");
-    ui->textBrowser->append(QString::number(grade));
+    ui->textBrowser->setText(answer);
+
 }
 
