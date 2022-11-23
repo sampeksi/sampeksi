@@ -60,7 +60,7 @@
      <string/>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="textBrowser">
+   <widget class="QTextBrowser" name="infoTextBrowser">
     <property name="geometry">
      <rect>
       <x>130</x>
