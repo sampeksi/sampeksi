@@ -48,6 +48,7 @@ void Book::addNewChapter(const std::string &id,
     } else {
         cout << "Error: Already exists." <<endl;
     }
+    delete new_chapter;
 }
 
 void Book::addRelation(const std::string &subchapter,
