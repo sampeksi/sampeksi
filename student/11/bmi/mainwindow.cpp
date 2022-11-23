@@ -24,7 +24,7 @@ void MainWindow::on_countButton_clicked()
     double height = h.toDouble();
 
     if (h == "" or height == 0) {
-        ui->infoTextBrowser->setText("Cannot count.");
+        ui->infoTextBrowser->setText("Cannot count");
         ui->resultLabel->setText("");
     } else {
     double bmi = weigth / ((height / 100)*(height /100));
