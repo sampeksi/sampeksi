@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QTimer>
+#include <QDebug>
+#include <QColor>
 
 namespace Ui {
 class MainWindow;
@@ -24,9 +26,20 @@ public:
 private slots:
     // Add your slots here
 
+    void on_startButton_clicked();
+
+    void on_stopButton_clicked();
+
+    void on_resetButton_clicked();
+
+    void timer_function();
+
 private:
     Ui::MainWindow *ui;
-    // Add other necessary members here
+
+    bool is_running = false;
+    int value_ = 0;
+    int mins_ = 0;
 };
 
 #endif // MAINWINDOW_HH
