@@ -1,0 +1,6 @@
+<RCC>
+    <qresource>
+        <file alias="rat.png">Resources/rat.png</file>
+        <file alias="snakehead.png">Resources/snakehead.png</file>
+    </qresource>
+</RCC>
