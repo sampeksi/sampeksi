@@ -7,6 +7,8 @@
 #include <QImage>
 #include <QKeyEvent>
 #include <QFont>
+#include <fstream>
+#include <iostream>
 
 using namespace std;
 
@@ -23,10 +25,11 @@ MainWindow::MainWindow(QWidget *parent)
     scene_->setSceneRect(0, 0, length_ - 1, width_ - 1);
 
     ui->graphicsView->setScene(scene_);
-    //ui->graphicsView->fitInView(scene.sceneRect());
+
     ui->graphicsView->show();
 
     drawImages();
+    updateLeaderboard();
 
     ui->horizontalSliderHeight->setRange(0, SLIDER_MAX_VALUE);
     ui->horizontalSliderWidth->setRange(0, SLIDER_MAX_VALUE);
@@ -42,9 +45,28 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButtonStart, &QPushButton::clicked, this,
             &MainWindow::pushButtonStartClicked);
 
-    timer_ = new QTimer(this);
-    connect(timer_, &QTimer::timeout, this,
+    QPalette pal = QPalette();
+    pal.setColor(QPalette::Window, Qt::green);
+    ui->lcdNumberScore->setAutoFillBackground(true);
+    ui->lcdNumberScore->setPalette(pal);
+
+    pal.setColor(QPalette::Window, Qt::blue);
+    ui->lcdNumberTime->setAutoFillBackground(true);
+    ui->lcdNumberTime->setPalette(pal);
+
+    timer_.setSingleShot(false);
+    connect(&timer_, &QTimer::timeout, this,
            &MainWindow::gameSimulation);
+
+    secondTimer_.setSingleShot(false),
+    connect(&secondTimer_, &QTimer::timeout, this,
+           &MainWindow::gameTimer);
+
+    connect(ui->pushButtonPause, SIGNAL(clicked()), this,
+            SLOT(pushButtonPauseClicked()));
+
+    connect(ui->pushButtonReset, SIGNAL(clicked()), this,
+            SLOT(pushButtonResetClicked()));
 }
 
 MainWindow::~MainWindow()
@@ -54,6 +76,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
+    if (!paused_) {
+
     if (event->key() == Qt::Key_W and direction_ != "s") {
         direction_ = "w";
     }
@@ -65,6 +89,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     }
     if (event->key() == Qt::Key_D and direction_ != "a") {
         direction_ = "d";
+    }
     }
 }
 
@@ -123,8 +148,12 @@ void MainWindow::playgroundSizeChanged()
 
 void MainWindow::gameSimulation()
 {
-    if (Board[0].gameOver()) {
-        if (Board[0].gameLost()) {
+    if (paused_) {
+        timer_.stop();
+    } else {
+
+    if (Board.back().gameOver()) {
+        if (Board.back().gameLost()) {
             ui->labelGameEnd->setText("You lost :(");
             scene_->setForegroundBrush(Qt::red);
 
@@ -135,13 +164,15 @@ void MainWindow::gameSimulation()
     } else {
 
     pair<int, int> lastHeadPosition = make_pair(
-                                  Board[0].returnCoordinates("head")[0] *5 +7,
-                                  Board[0].returnCoordinates("head")[1] *5 +4);
+                                  Board.back().returnCoordinates("head")[0]
+                                  * SCALER +7,
+                                  Board.back().returnCoordinates("head")[1]
+                                  * SCALER +4);
 
     Board[0].moveSnake(direction_);
 
-    int currentSnakeSize = Board[0].returnCoordinates("head")[2];
-    deque<int> foodCoordinates = Board[0].returnCoordinates("food");
+    int currentSnakeSize = Board.back().returnCoordinates("head")[2];
+    deque<int> foodCoordinates = Board.back().returnCoordinates("food");
 
     if (snakeSize_ != currentSnakeSize) {
         bodyparts.push_front(lastHeadPosition);
@@ -150,16 +181,16 @@ void MainWindow::gameSimulation()
         bodyparts.push_front(lastHeadPosition);
         QBrush whiteBrush(Qt::white);
         QPen whitePen(Qt::white);
-        scene_->addRect(bodyparts.back().first, bodyparts.back().second, 5, 5,
-                        whitePen, whiteBrush);
+        scene_->addRect(bodyparts.back().first, bodyparts.back().second,
+                        SCALER, SCALER, whitePen, whiteBrush);
 
         bodyparts.pop_back();
     }
 
-    deque<int> headCoordinates = Board[0].returnCoordinates("head");
-    head_->setPos(headCoordinates[0] * 5, headCoordinates[1] * 5);
+    deque<int> headCoordinates = Board.back().returnCoordinates("head");
+    head_->setPos(headCoordinates[0] * SCALER, headCoordinates[1] * SCALER);
 
-    food_->setPos(foodCoordinates[0] * 5, foodCoordinates[1] * 5);
+    food_->setPos(foodCoordinates[0] * SCALER, foodCoordinates[1] * SCALER);
 
     for (auto& bodypart : bodyparts) {
 
@@ -167,30 +198,138 @@ void MainWindow::gameSimulation()
 
             QBrush blackBrush(Qt::black);
             QPen blackPen(Qt::black);
-            scene_->addRect(bodypart.first, bodypart.second, 5, 5,
+            scene_->addRect(bodypart.first, bodypart.second, SCALER, SCALER,
                             blackPen, blackBrush);
 
         } else {
             QBrush greenBrush(Qt::green);
             QPen greenPen(Qt::green);
-            scene_->addRect(bodypart.first, bodypart.second, 5, 5,
+            scene_->addRect(bodypart.first, bodypart.second, SCALER, SCALER,
                             greenPen, greenBrush);
         }
+    }
+    score_ = bodyparts.size();
+    ui->lcdNumberScore->display(score_);
     }
     }
 
 }
 
+void MainWindow::gameTimer()
+{
+    if (paused_) {
+        secondTimer_.stop();
+    } else {
+
+    if (seconds_ == 60) {
+        minutes_ += 1;
+        seconds_ = 0;
+    }
+    QString time = QString::number(minutes_);
+    time += QString::fromStdString(":");
+    time += QString::number(seconds_);
+
+    ui->lcdNumberTime->display(time);
+    seconds_ += 1;
+    }
+}
+
+void MainWindow::updateScores()
+{
+    ofstream scores("scores.txt");
+
+    QString score = QString::number(ui->lcdNumberScore->value());
+    QString name = ui->lineEditGameTag->text();
+
+    scores << score.toStdString() << ";" << name.toStdString();
+
+}
+
+void MainWindow::updateLeaderboard()
+{
+    ifstream scores("scores.txt");
+    string line;
+    while (getline(scores, line)) {
+        int i = line.find(';');
+        int points = stoi(line.substr(0, i));
+        string name = line.substr(i+1);
+        playerScores_.insert({points,name});
+    }
+    int rank = 1;
+
+    for (auto& score : playerScores_) {
+        QString text = QString::number(score.first);
+        text += ": ";
+        text += QString::fromStdString(score.second);
+
+        if (rank == 1) {
+            ui->labelFirst->setText(text);
+        } else if (rank == 2) {
+            ui->labelSecond->setText(text);
+        } else if (rank == 3) {
+            ui->labelThird->setText(text);
+        } else {
+            break;
+        }
+        rank += 1;
+    }
+}
+
 void MainWindow::pushButtonStartClicked()
 {
+    if (!paused_) {
+        ui->pushButtonStart->setEnabled(false);
+        ui->spinBoxSeed->setEnabled(false);
+        ui->horizontalSliderHeight->setEnabled(false);
+        ui->horizontalSliderWidth->setEnabled(false);
 
-    ui->spinBoxSeed->setEnabled(false);
-    ui->horizontalSliderHeight->setEnabled(false);
-    ui->horizontalSliderWidth->setEnabled(false);
-
-    const GameBoard field(length_ / 5, width_ / 5, ui->spinBoxSeed->value());
-    Board.push_back(field);
+        const GameBoard field(length_ / SCALER, width_ / SCALER,
+                            ui->spinBoxSeed->value());
+        Board.push_back(field);
+        }
+    paused_ = false;
     gameSimulation();
-    timer_->start(60);
+    timer_.start(60);
+    secondTimer_.start(1000);
+}
+
+
+void MainWindow::pushButtonResetClicked()
+{
+    timer_.stop();
+    secondTimer_.stop();
+
+    updateScores();
+
+    score_ = 0;
+    seconds_ = 0;
+    minutes_ = 0;
+    snakeSize_ = 1;
+
+    direction_ = "w";
+
+    ui->lcdNumberScore->display(score_);
+    ui->lcdNumberTime->display("0:0");
+
+    ui->labelGameEnd->setText("");
+    scene_->setForegroundBrush(Qt::NoBrush);
+
+    ui->pushButtonStart->setEnabled(true);
+    ui->horizontalSliderHeight->setEnabled(true);
+    ui->horizontalSliderWidth->setEnabled(true);
+    ui->labelSeed->setEnabled(true);
+
+    ui->horizontalSliderHeight->setValue(SLIDER_MAX_VALUE);
+    ui->horizontalSliderWidth->setValue(SLIDER_MAX_VALUE);
+
+}
+
+
+void MainWindow::pushButtonPauseClicked()
+{
+    if (timer_.isActive()) {
+        ui->pushButtonStart->setEnabled(true);
+        paused_ = true;
+    }
 }
 

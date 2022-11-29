@@ -29,6 +29,10 @@ public:
 private slots:
     void pushButtonStartClicked();
 
+    void pushButtonResetClicked();
+
+    void pushButtonPauseClicked();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene* scene_;
@@ -39,17 +43,27 @@ private:
 
     int length_ = 400;
     int width_ = 400;
-    int time_ = 0;
+    int seconds_ = 0;
+    int minutes_ = 0;
     int snakeSize_ = 1;
-    std::string direction_ = "w";
+    int score_;
+    int SCALER = 5;
 
-    QTimer* timer_;
+    std::string direction_ = "w";
+    std::multimap<int, std::string> playerScores_ = {};
+
+    bool paused_ = false;
+
+    QTimer timer_;
+    QTimer secondTimer_;
     std::deque<GameBoard> Board;
-    std::deque<std::pair<std::pair<int, int>, QGraphicsItem*>> boxes = {};
 
     void drawImages();
     void playgroundSizeChanged();
     void gameSimulation();
+    void gameTimer();
+    void updateScores();
+    void updateLeaderboard();
 
 };
 #endif // MAINWINDOW_HH
