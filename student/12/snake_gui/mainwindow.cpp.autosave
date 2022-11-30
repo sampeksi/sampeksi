@@ -287,10 +287,12 @@ void MainWindow::gameTimer()
 
 void MainWindow::pushButtonStartClicked()
 {
-
+    // Setting start button unenabled because game is already on.
     ui->pushButtonStart->setEnabled(false);
+    // On the contrary game can now be paused.
     ui->pushButtonPause->setEnabled(true);
-
+    
+    // If game hasn't just been paused, new gameboard object will be created.
     if (!paused_) {
         ui->spinBoxSeed->setEnabled(false);
         ui->horizontalSliderHeight->setEnabled(false);
@@ -301,29 +303,36 @@ void MainWindow::pushButtonStartClicked()
         Board.push_back(field);
         }
     paused_ = false;
+    // function is called and game starts.
     gameSimulation();
-    timer_.start(70);
-    secondTimer_.start(1000);
+    
+    // Both timers start.
+    timer_.start(timerFreq);
+    secondTimer_.start(secondTimerFreq);
 
 }
 
 
 void MainWindow::pushButtonResetClicked()
 {
+    // Timers are stopped.
     timer_.stop();
     secondTimer_.stop();
-
+    
+    // Variables are set to default.
     score_ = 0;
     seconds_ = 0;
     minutes_ = 0;
     snakeSize_ = 1;
-
+    
+    // Squares that represent snake's body are turned back to default color.
     for (auto& coordinates : bodyparts) {
         QBrush whiteBrush(Qt::white);
         QPen whitePen(Qt::white);
         scene_->addRect(coordinates.first, coordinates.second,
                         SCALER, SCALER, whitePen, whiteBrush);
     }
+    // Snake has no bo
     bodyparts = {};
 
     direction_ = "w";

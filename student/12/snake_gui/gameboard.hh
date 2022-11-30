@@ -68,6 +68,7 @@ public:
     // Prints the gameboard and the snake in it.
     void print() const;
 
+    // Returns head's or food's coordinates for mainwindow source file.
     std::deque<int> returnCoordinates(std::string bodypart) const;
 
 private:

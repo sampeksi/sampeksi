@@ -123,6 +123,7 @@ std::deque<int> GameBoard::returnCoordinates(
 {
     std::deque<int> coordinates;
 
+    // Which coordinates are returned based on parameter.
     if (icon == "head") {
         coordinates = getHead().getCoordinates();
     }
