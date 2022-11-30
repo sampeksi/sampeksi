@@ -47,10 +47,9 @@ private:
     int minutes_ = 0;
     int snakeSize_ = 1;
     int score_;
-    int SCALER = 5;
+    int SCALER = 7;
 
     std::string direction_ = "w";
-    std::multimap<int, std::string> playerScores_ = {};
 
     bool paused_ = false;
 
@@ -62,8 +61,6 @@ private:
     void playgroundSizeChanged();
     void gameSimulation();
     void gameTimer();
-    void updateScores();
-    void updateLeaderboard();
 
 };
 #endif // MAINWINDOW_HH

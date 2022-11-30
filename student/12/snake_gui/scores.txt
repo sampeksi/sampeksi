@@ -1,1 +1,4 @@
-9;Sampo
+4.000000;Sampo
+1.000000;Sampo
+2.000000;Testi
+9.000000;Testi

@@ -174,8 +174,8 @@
    <widget class="QPushButton" name="pushButtonPause">
     <property name="geometry">
      <rect>
-      <x>600</x>
-      <y>240</y>
+      <x>460</x>
+      <y>170</y>
       <width>84</width>
       <height>28</height>
      </rect>
@@ -187,8 +187,8 @@
    <widget class="QPushButton" name="pushButtonReset">
     <property name="geometry">
      <rect>
-      <x>700</x>
-      <y>240</y>
+      <x>460</x>
+      <y>220</y>
       <width>84</width>
       <height>28</height>
      </rect>
@@ -223,81 +223,6 @@
      <string/>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEditGameTag">
-    <property name="geometry">
-     <rect>
-      <x>460</x>
-      <y>200</y>
-      <width>113</width>
-      <height>28</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="labelGameTag">
-    <property name="geometry">
-     <rect>
-      <x>460</x>
-      <y>170</y>
-      <width>63</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Gametag</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="labelLeaderboard">
-    <property name="geometry">
-     <rect>
-      <x>460</x>
-      <y>250</y>
-      <width>91</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Leaberboard:</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="labelFirst">
-    <property name="geometry">
-     <rect>
-      <x>460</x>
-      <y>280</y>
-      <width>63</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="labelSecond">
-    <property name="geometry">
-     <rect>
-      <x>460</x>
-      <y>310</y>
-      <width>63</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="labelThird">
-    <property name="geometry">
-     <rect>
-      <x>460</x>
-      <y>340</y>
-      <width>63</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -320,8 +245,8 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>501</x>
-     <y>258</y>
+     <x>751</x>
+     <y>38</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>

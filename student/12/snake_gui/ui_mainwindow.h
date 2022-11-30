@@ -14,7 +14,6 @@
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QLCDNumber>
 #include <QtWidgets/QLabel>
-#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
@@ -46,12 +45,6 @@ public:
     QPushButton *pushButtonReset;
     QPushButton *pushButtonClose;
     QLabel *labelGameEnd;
-    QLineEdit *lineEditGameTag;
-    QLabel *labelGameTag;
-    QLabel *labelLeaderboard;
-    QLabel *labelFirst;
-    QLabel *labelSecond;
-    QLabel *labelThird;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -105,34 +98,16 @@ public:
         pushButtonStart->setGeometry(QRect(460, 120, 84, 28));
         pushButtonPause = new QPushButton(centralwidget);
         pushButtonPause->setObjectName(QString::fromUtf8("pushButtonPause"));
-        pushButtonPause->setGeometry(QRect(600, 240, 84, 28));
+        pushButtonPause->setGeometry(QRect(460, 170, 84, 28));
         pushButtonReset = new QPushButton(centralwidget);
         pushButtonReset->setObjectName(QString::fromUtf8("pushButtonReset"));
-        pushButtonReset->setGeometry(QRect(700, 240, 84, 28));
+        pushButtonReset->setGeometry(QRect(460, 220, 84, 28));
         pushButtonClose = new QPushButton(centralwidget);
         pushButtonClose->setObjectName(QString::fromUtf8("pushButtonClose"));
         pushButtonClose->setGeometry(QRect(710, 0, 84, 28));
         labelGameEnd = new QLabel(centralwidget);
         labelGameEnd->setObjectName(QString::fromUtf8("labelGameEnd"));
         labelGameEnd->setGeometry(QRect(120, 90, 251, 111));
-        lineEditGameTag = new QLineEdit(centralwidget);
-        lineEditGameTag->setObjectName(QString::fromUtf8("lineEditGameTag"));
-        lineEditGameTag->setGeometry(QRect(460, 200, 113, 28));
-        labelGameTag = new QLabel(centralwidget);
-        labelGameTag->setObjectName(QString::fromUtf8("labelGameTag"));
-        labelGameTag->setGeometry(QRect(460, 170, 63, 20));
-        labelLeaderboard = new QLabel(centralwidget);
-        labelLeaderboard->setObjectName(QString::fromUtf8("labelLeaderboard"));
-        labelLeaderboard->setGeometry(QRect(460, 250, 91, 20));
-        labelFirst = new QLabel(centralwidget);
-        labelFirst->setObjectName(QString::fromUtf8("labelFirst"));
-        labelFirst->setGeometry(QRect(460, 280, 63, 20));
-        labelSecond = new QLabel(centralwidget);
-        labelSecond->setObjectName(QString::fromUtf8("labelSecond"));
-        labelSecond->setGeometry(QRect(460, 310, 63, 20));
-        labelThird = new QLabel(centralwidget);
-        labelThird->setObjectName(QString::fromUtf8("labelThird"));
-        labelThird->setGeometry(QRect(460, 340, 63, 20));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -162,11 +137,6 @@ public:
         pushButtonReset->setText(QCoreApplication::translate("MainWindow", "Reset", nullptr));
         pushButtonClose->setText(QCoreApplication::translate("MainWindow", "Close", nullptr));
         labelGameEnd->setText(QString());
-        labelGameTag->setText(QCoreApplication::translate("MainWindow", "Gametag", nullptr));
-        labelLeaderboard->setText(QCoreApplication::translate("MainWindow", "Leaberboard:", nullptr));
-        labelFirst->setText(QString());
-        labelSecond->setText(QString());
-        labelThird->setText(QString());
     } // retranslateUi
 
 };

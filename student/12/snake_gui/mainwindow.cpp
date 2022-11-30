@@ -9,6 +9,8 @@
 #include <QFont>
 #include <fstream>
 #include <iostream>
+#include <iomanip>
+
 
 using namespace std;
 
@@ -29,7 +31,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->show();
 
     drawImages();
-    updateLeaderboard();
 
     ui->horizontalSliderHeight->setRange(0, SLIDER_MAX_VALUE);
     ui->horizontalSliderWidth->setRange(0, SLIDER_MAX_VALUE);
@@ -67,6 +68,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->pushButtonReset, SIGNAL(clicked()), this,
             SLOT(pushButtonResetClicked()));
+
+    ui->pushButtonPause->setEnabled(false);
 }
 
 MainWindow::~MainWindow()
@@ -153,6 +156,7 @@ void MainWindow::gameSimulation()
     } else {
 
     if (Board.back().gameOver()) {
+        secondTimer_.stop();
         if (Board.back().gameLost()) {
             ui->labelGameEnd->setText("You lost :(");
             scene_->setForegroundBrush(Qt::red);
@@ -165,11 +169,11 @@ void MainWindow::gameSimulation()
 
     pair<int, int> lastHeadPosition = make_pair(
                                   Board.back().returnCoordinates("head")[0]
-                                  * SCALER +7,
+                                  * SCALER +6,
                                   Board.back().returnCoordinates("head")[1]
-                                  * SCALER +4);
+                                  * SCALER +3);
 
-    Board[0].moveSnake(direction_);
+    Board.back().moveSnake(direction_);
 
     int currentSnakeSize = Board.back().returnCoordinates("head")[2];
     deque<int> foodCoordinates = Board.back().returnCoordinates("food");
@@ -234,51 +238,14 @@ void MainWindow::gameTimer()
     }
 }
 
-void MainWindow::updateScores()
-{
-    ofstream scores("scores.txt");
-
-    QString score = QString::number(ui->lcdNumberScore->value());
-    QString name = ui->lineEditGameTag->text();
-
-    scores << score.toStdString() << ";" << name.toStdString();
-
-}
-
-void MainWindow::updateLeaderboard()
-{
-    ifstream scores("scores.txt");
-    string line;
-    while (getline(scores, line)) {
-        int i = line.find(';');
-        int points = stoi(line.substr(0, i));
-        string name = line.substr(i+1);
-        playerScores_.insert({points,name});
-    }
-    int rank = 1;
-
-    for (auto& score : playerScores_) {
-        QString text = QString::number(score.first);
-        text += ": ";
-        text += QString::fromStdString(score.second);
-
-        if (rank == 1) {
-            ui->labelFirst->setText(text);
-        } else if (rank == 2) {
-            ui->labelSecond->setText(text);
-        } else if (rank == 3) {
-            ui->labelThird->setText(text);
-        } else {
-            break;
-        }
-        rank += 1;
-    }
-}
 
 void MainWindow::pushButtonStartClicked()
 {
+
+    ui->pushButtonStart->setEnabled(false);
+    ui->pushButtonPause->setEnabled(true);
+
     if (!paused_) {
-        ui->pushButtonStart->setEnabled(false);
         ui->spinBoxSeed->setEnabled(false);
         ui->horizontalSliderHeight->setEnabled(false);
         ui->horizontalSliderWidth->setEnabled(false);
@@ -289,8 +256,9 @@ void MainWindow::pushButtonStartClicked()
         }
     paused_ = false;
     gameSimulation();
-    timer_.start(60);
+    timer_.start(70);
     secondTimer_.start(1000);
+
 }
 
 
@@ -299,14 +267,21 @@ void MainWindow::pushButtonResetClicked()
     timer_.stop();
     secondTimer_.stop();
 
-    updateScores();
-
     score_ = 0;
     seconds_ = 0;
     minutes_ = 0;
     snakeSize_ = 1;
 
+    for (auto& coordinates : bodyparts) {
+        QBrush whiteBrush(Qt::white);
+        QPen whitePen(Qt::white);
+        scene_->addRect(coordinates.first, coordinates.second,
+                        SCALER, SCALER, whitePen, whiteBrush);
+    }
+    bodyparts = {};
+
     direction_ = "w";
+    paused_ = false;
 
     ui->lcdNumberScore->display(score_);
     ui->lcdNumberTime->display("0:0");
@@ -315,6 +290,8 @@ void MainWindow::pushButtonResetClicked()
     scene_->setForegroundBrush(Qt::NoBrush);
 
     ui->pushButtonStart->setEnabled(true);
+    ui->pushButtonPause->setEnabled(false);
+
     ui->horizontalSliderHeight->setEnabled(true);
     ui->horizontalSliderWidth->setEnabled(true);
     ui->labelSeed->setEnabled(true);
