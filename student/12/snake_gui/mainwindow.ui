@@ -213,9 +213,9 @@
    <widget class="QLabel" name="labelGameEnd">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>90</y>
-      <width>251</width>
+      <x>460</x>
+      <y>270</y>
+      <width>291</width>
       <height>111</height>
      </rect>
     </property>

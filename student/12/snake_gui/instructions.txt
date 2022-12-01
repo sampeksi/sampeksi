@@ -1,0 +1,14 @@
+Käyttöohje:
+
+Ennen pelin alkua pelaajalla on mahdollisuus muokata pelikentän kokoa liukusäätimillä. Lisäksi hän voi syöttää valitsemansa siemenluvun, joka vaikuttaa ruokaikonien ilmestymiseen kentälle. Käyttöliittymässä on lisäksi sekunttikello ja pistelaskuri, jotka kuvaavat pelaajan edistymistä.
+	Peli käynnistyy pelaajan painaessa start-näppäintä. Samalla start-nappula, siemenluvun syötelaatikko ja liukusäätimet muuttuvat käyttökelvottomiksi. Siemenlukua voi muuttaa aina ennen pelin alkua. Tämä estää pelaajaa painamasta mitään sellaista, mikä sotkisi pelin kulun. Käärme lähtee liikkumaan automaattisesti ylöspäin ja pelaaja pystyy ohjaan käärmettä näppäimillä w,a,s,d. Muuten pelin kulku noudattaa tavallista matopeliä. Pelin päättyessä peliruudun tausta muuttuu ja pelaajalle ilmoitetaan lopputulos. Pelaaja voittaa, jos käärme täyttää koko peliruudun ja häviää käärmeen törmätessä seinään tai omaan häntäänsä.
+	Pelatessa pelaajan tulee huomioida käärmeen pään dimensiot. Vaikka pää onkin kuva, sen dimensiot ovat neliö, eli reunoja lähestyessä täytyy olla tarkkana mm. käärmeen kielen kanssa.
+
+Pelissä on toteutettu seuraavat lisäominaisuudet:
+1. Ennen pelin alkua pelaaja voi säätää pelikentän kokoa liukusäätimillä. Oletusasetus liukusäätimillä on, että pelikenttä on venytetty äärimmilleen. Pelikenttää voi muokata aina ennen uuden pelin alkua.
+2. Madon pää ja ruoka on esitetty kuvina.
+3. Pelissä on ajastin, joka kertoo käynnissä olevan pelin keston. Ajastin nollaantu aina resetoinnin ja ikkunan sulkemisen yhteydessä.
+4. Pelissä on pistelaskuri. Pisteen saa aina madon syödessä yhden ruoan. Pistelaskuri nollaantu aina resetoinnin ja ikkunan sulkemisen yhteydessä.
+5. Pelissä on pause-nappula, joka aktivoituu pelin alkaessa. Kun peli ei ole käynnissä, pause ei ole käytössä.
+6. Käyttöliittymän väri muuttuu pelin päättyessä. Jos pelaaja voittaa väri on vihreä ja hävitessä punainen. Resetoinnin yhteydessä väri muuttuu normaaliksi ja ilmoitus häviää.
+

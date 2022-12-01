@@ -107,7 +107,7 @@ public:
         pushButtonClose->setGeometry(QRect(710, 0, 84, 28));
         labelGameEnd = new QLabel(centralwidget);
         labelGameEnd->setObjectName(QString::fromUtf8("labelGameEnd"));
-        labelGameEnd->setGeometry(QRect(120, 90, 251, 111));
+        labelGameEnd->setGeometry(QRect(460, 270, 291, 111));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));

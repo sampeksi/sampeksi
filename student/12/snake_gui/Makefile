@@ -997,16 +997,50 @@ mainwindow.o: mainwindow.cpp mainwindow.hh \
 		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtCore/qtimer.h \
 		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtCore/qbasictimer.h \
 		ui_mainwindow.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtCore/QVariant \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/QApplication \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/qapplication.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtCore/qcoreapplication.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtCore/qeventloop.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtGui/qguiapplication.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtGui/qinputmethod.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtCore/qlocale.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/QGraphicsView \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/qgraphicsview.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/qscrollarea.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/qframe.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/QLCDNumber \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/qlcdnumber.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/QLabel \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/qlabel.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtGui/qpicture.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtGui/qtextdocument.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/QMenuBar \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/qmenubar.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/qmenu.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtGui/qaction.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/QPushButton \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/qpushbutton.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/qabstractbutton.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/QSlider \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/qslider.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/qabstractslider.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/QSpinBox \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/qspinbox.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtGui/qvalidator.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtCore/qregularexpression.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/QStatusBar \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/qstatusbar.h \
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/QWidget \
 		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/QGraphicsItem \
 		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/QGraphicsSceneMouseEvent \
 		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/qgraphicssceneevent.h \
 		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtCore/QCoreApplication \
-		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtCore/qcoreapplication.h \
-		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtCore/qeventloop.h \
 		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtWidgets/QGraphicsPixmapItem \
 		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtGui/QImage \
-		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtGui/QKeyEvent \
-		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtGui/QFont
+		/opt/lintula/Qt/6.1.1/6.1.1/gcc_64/include/QtGui/QKeyEvent
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 point.o: point.cpp point.hh

@@ -1,3 +1,31 @@
+/*
+ * Kuvaus:
+ * Ohjelmassa toteututaan perinteinen matopeli.
+ * Pelissä pelaaja koittaa kasvattaa matoa syömällä peliruudulle ilmestyviä
+ * ruokia ja kasvattaa tällä tavoin matoa.
+ * Pelaaja voittaa, jos mato täyttää koko peliruudun, ja häviää madon
+ * törmätessä peliruudun seinään tai omaan häntäänsä.
+ * Ohjelma ilmoittaa voitosta ilmoituksella ja pelikenttä muuttuu vihreäksi.
+ * Vähitessä kenttä muuttuu punaiseksi.
+ *  Pelin alussa pelaajat kysytään siemenluku, jonka avulla ohjelma generoi
+ * satunnaisposition ruoalle joka kerta kun mato syö sen.
+ * Käyttöliittymässä on liukusäätimet, joiden avulla pelaaja voi muuttaa peli-
+ * kentän kokoa. Lisäksi käyttöliittymässä näkyvät pelin ajallinen kesto ja
+ * pelaajan pisteet. Lisäksi pelaajan on mahdollista pysäyttää tai resetoida
+ * peli tai halutessaan sulkea ikkuna painonapeilla.
+####################################################################
+# COMP.CS.110 Programming 2: Structures, 2022                      #
+#                                                                  #
+# Project4: Snake                                                  #
+# Program description: Implements a game called Snake.             #
+#                                                                  #
+# File: gameboard.hh                                               #
+# Description: Declares a class representing the user interface    #
+#                                                                  #
+# Author: Sampo Suokuisma, 150422473, sampo.suokuisma@tuni.fi      #
+####################################################################
+*/
+
 #ifndef MAINWINDOW_HH
 #define MAINWINDOW_HH
 
@@ -58,9 +86,9 @@ private:
 
     int score_; // Player points. Increases by one every time snake grows.
 
-    int SCALER = 7; // Multiplier to scale graffic gameboard and gameboard
+    int SCALER = 10; // Multiplier to scale graffic gameboard and gameboard
                     // object.
-    int xSCALER = 6; // Since head of the snake is unsymmetric object
+    int xSCALER = 7; // Since head of the snake is unsymmetric object
     int ySCALER = 3; // Scalers are required to make the tail look realistic.
 
     std::string direction_ = "w"; // Snake's default direction.
@@ -73,6 +101,10 @@ private:
     std::deque<GameBoard> Board; // Container for every gameboard object.
                                  // New object is added each time new game
                                  // has been sarted.
+
+    int timerFreq_ = 80; // Timer calls function gameSimulation so snake
+                         // moves automatically.
+    int secondTimerFreq_ = 1000; // Game time is updated every second.
 
     // Method to transfrom .png files into graphic items.
     void drawImages();

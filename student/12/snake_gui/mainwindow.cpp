@@ -1,3 +1,17 @@
+/*
+####################################################################
+# COMP.CS.110 Programming 2: Structures, 2022                      #
+#                                                                  #
+# Project4: Snake                                                  #
+# Program description: Implements a game called Snake.             #
+#                                                                  #
+# File: gameboard.hh                                               #
+# Description: Defines a class representing the user interface     #
+#                                                                  #
+# Author: Sampo Suokuisma, 150422473, sampo.suokuisma@tuni.fi      #
+####################################################################
+*/
+
 #include "mainwindow.hh"
 #include "ui_mainwindow.h"
 #include <QGraphicsItem>
@@ -6,6 +20,7 @@
 #include <QGraphicsPixmapItem>
 #include <QImage>
 #include <QKeyEvent>
+#include <QFont>
 
 using namespace std;
 
@@ -19,13 +34,15 @@ MainWindow::MainWindow(QWidget *parent)
     scene_ = new QGraphicsScene(this);
 
     // Gameboard is placed top left corner.
-    // +2 is added since margins take one pixel from each side.
-    ui->graphicsView->setGeometry(0, 0, length_ +2, width_ + 2);
+    // 2* is added since margins take one pixel from each side.
+    // Because gameboard is scaled pixel is actually SCALER.
+    ui->graphicsView->setGeometry(0, 0, width_ + 2 * SCALER, length_ +
+                                  2 * SCALER );
     ui->graphicsView->setScene(scene_);
 
-    // Both length and with are decreased by one since food and snake
+    // Both length and with are decreased by 1* SCALER since food and snake
     // are considered to be inside sceneRect.
-    scene_->setSceneRect(0, 0, length_ - 1, width_ - 1);
+    scene_->setSceneRect(0, 0, width_ + SCALER , length_ +  SCALER);
 
     ui->graphicsView->show();
 
@@ -122,7 +139,7 @@ void MainWindow::drawImages()
                                    QPixmap::fromImage(ratImage));
 
     // Decreasing size of the image.
-    rat->setScale(0.02);
+    rat->setScale(0.025);
 
     // DEfining that item is movable.
     rat->setFlags(QGraphicsItem::ItemIsMovable);
@@ -144,12 +161,12 @@ void MainWindow::drawImages()
     QImage snakeheadImage(QString::fromStdString(file2));
     QGraphicsPixmapItem* snakehead = new QGraphicsPixmapItem(
                                    QPixmap::fromImage(snakeheadImage));
-    snakehead->setScale(0.01);
+    snakehead->setScale(0.0125);
     snakehead->setFlags(QGraphicsItem::ItemIsMovable);
     head_ = snakehead;
 
     head_->setZValue(2);
-    head_->setPos(length_ / 2, width_ / 2);
+    head_->setPos(width_ / 2, length_ / 2);
     scene_->addItem(snakehead);
 }
 
@@ -163,15 +180,15 @@ void MainWindow::playgroundSizeChanged()
     width_ = width;
 
     // Visual gameboard is changed based on given dimensions.
-    ui->graphicsView->setGeometry(0, 0, length_ +2, width_ + 2);
+    ui->graphicsView->setGeometry(0, 0, width_ +2, length_ + 2);
     ui->graphicsView->setScene(scene_);
-    scene_->setSceneRect(0, 0, length_ - 1, width_ - 1);
+    scene_->setSceneRect(0, 0, width_ , length_);
 
     ui->graphicsView->setScene(scene_);
     ui->graphicsView->show();
 
     // Head is also repositioned.
-    head_->setPos(length_ / 2, width_ /2);
+    head_->setPos(width_ / 2, length_ /2);
 
 }
 
@@ -186,15 +203,17 @@ void MainWindow::gameSimulation()
         secondTimer_.stop();
         timer_.stop();
 
+        QFont font("Arial", 45, QFont::Bold);
+        ui->labelGameEnd->setFont(font);
         // Screen turns green if player won, else turns red.
         // Text label prints message about the situation.
         if (Board.back().gameLost()) {
             ui->labelGameEnd->setText("You lost :(");
-            scene_->setForegroundBrush(Qt::red);
+            this->setStyleSheet("QMainWindow { background-color: red; }");
 
         } else {
             ui->labelGameEnd->setText("You won!");
-            scene_->setForegroundBrush(Qt::green);
+            this->setStyleSheet("QMainWindow { background-color: green; }");
         }
     } else {
 
@@ -229,13 +248,18 @@ void MainWindow::gameSimulation()
 
         bodyparts.pop_back();
     }
+
+    deque<int> foodCoordinates = Board.back().returnCoordinates("food");
+
     // Mooving head by one step.
     deque<int> headCoordinates = Board.back().returnCoordinates("head");
-    head_->setPos(headCoordinates[0] * SCALER, headCoordinates[1] * SCALER);
+    head_->setPos(headCoordinates[0] * SCALER
+            , headCoordinates[1] * SCALER );
 
     // Same with food but coordinates are the same if snake didn't eat it.
-    deque<int> foodCoordinates = Board.back().returnCoordinates("food");
-    food_->setPos(foodCoordinates[0] * SCALER, foodCoordinates[1] * SCALER);
+
+    food_->setPos(foodCoordinates[0] * SCALER,
+            foodCoordinates[1] * SCALER);
 
     // Painting squares on the board that have the same coordinates as
     // snake's bodyparts.
@@ -250,8 +274,8 @@ void MainWindow::gameSimulation()
                             blackPen, blackBrush);
 
         } else {
-            QBrush greenBrush(Qt::green);
-            QPen greenPen(Qt::green);
+            QBrush greenBrush(Qt::darkGreen);
+            QPen greenPen(Qt::darkGreen);
             scene_->addRect(bodypart.first, bodypart.second, SCALER, SCALER,
                             greenPen, greenBrush);
         }
@@ -287,56 +311,70 @@ void MainWindow::gameTimer()
 
 void MainWindow::pushButtonStartClicked()
 {
-
+    // Setting start button unenabled because game is already on.
     ui->pushButtonStart->setEnabled(false);
+    // On the contrary game can now be paused.
     ui->pushButtonPause->setEnabled(true);
-
+    
+    // If game hasn't just been paused, new gameboard object will be created.
     if (!paused_) {
         ui->spinBoxSeed->setEnabled(false);
         ui->horizontalSliderHeight->setEnabled(false);
         ui->horizontalSliderWidth->setEnabled(false);
 
-        const GameBoard field(length_ / SCALER, width_ / SCALER,
+        const GameBoard field(width_ / SCALER, length_ / SCALER,
                             ui->spinBoxSeed->value());
         Board.push_back(field);
         }
     paused_ = false;
+    // function is called and game starts.
     gameSimulation();
-    timer_.start(70);
-    secondTimer_.start(1000);
+    
+    // Both timers start.
+    timer_.start(timerFreq_);
+    secondTimer_.start(secondTimerFreq_);
 
 }
 
 
 void MainWindow::pushButtonResetClicked()
 {
+    // Timers are stopped.
     timer_.stop();
     secondTimer_.stop();
-
+    
+    // Variables are set to default.
     score_ = 0;
     seconds_ = 0;
     minutes_ = 0;
     snakeSize_ = 1;
-
+    
+    // Squares that represent snake's body are turned back to default color.
     for (auto& coordinates : bodyparts) {
         QBrush whiteBrush(Qt::white);
         QPen whitePen(Qt::white);
         scene_->addRect(coordinates.first, coordinates.second,
                         SCALER, SCALER, whitePen, whiteBrush);
     }
+    // Snake has no body.
     bodyparts = {};
 
     direction_ = "w";
     paused_ = false;
 
+    // User interface is returned back to default.
     ui->lcdNumberScore->display(score_);
     ui->lcdNumberTime->display("0:0");
 
     ui->labelGameEnd->setText("");
     scene_->setForegroundBrush(Qt::NoBrush);
 
+    ui->labelGameEnd->setText("");
+    this->setStyleSheet("QMainWindow { background-color: white; }");
+
     ui->pushButtonStart->setEnabled(true);
     ui->pushButtonPause->setEnabled(false);
+    ui->spinBoxSeed->setEnabled(true);
 
     ui->horizontalSliderHeight->setEnabled(true);
     ui->horizontalSliderWidth->setEnabled(true);
@@ -344,6 +382,10 @@ void MainWindow::pushButtonResetClicked()
 
     ui->horizontalSliderHeight->setValue(SLIDER_MAX_VALUE);
     ui->horizontalSliderWidth->setValue(SLIDER_MAX_VALUE);
+
+    // Head and food are returned back to their default positions.
+    food_->setPos(-100, -100);
+    head_->setPos(width_ / 2, length_ /2);
 
 }
 
