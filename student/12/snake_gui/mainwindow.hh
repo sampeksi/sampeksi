@@ -115,8 +115,14 @@ private:
     // Method to showcase actions.
     void gameSimulation();
 
+    // Creates visual snake's body.
+    void showBody();
+
     // Updates time.¨
     void gameTimer();
+
+    // Ends the game.
+    void endGame();
 
 };
 #endif // MAINWINDOW_HH

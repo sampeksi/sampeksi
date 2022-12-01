@@ -196,71 +196,71 @@ void MainWindow::gameSimulation()
 {
     if (paused_) { // Game will stop if pause button has been clicked.
         timer_.stop();
-    } else {
+    }
+    else {
 
     // if game has ended timers will be stopped and result of the game stated.
-    if (Board.back().gameOver()) {
-        secondTimer_.stop();
-        timer_.stop();
-
-        QFont font("Arial", 45, QFont::Bold);
-        ui->labelGameEnd->setFont(font);
-        // Screen turns green if player won, else turns red.
-        // Text label prints message about the situation.
-        if (Board.back().gameLost()) {
-            ui->labelGameEnd->setText("You lost :(");
-            this->setStyleSheet("QMainWindow { background-color: red; }");
-
-        } else {
-            ui->labelGameEnd->setText("You won!");
-            this->setStyleSheet("QMainWindow { background-color: green; }");
+        if (Board.back().gameOver()) {
+        endGame();
         }
-    } else {
 
-    // Saving the last position of the head.
-    // This is tells, where neck should be next.
-    pair<int, int> lastHeadPosition = make_pair(
+        else {
+
+        // Saving the last position of the head.
+        // This is tells, where neck should be next.
+        pair<int, int> lastHeadPosition = make_pair(
                                   Board.back().returnCoordinates("head")[0]
                                   * SCALER + xSCALER,
                                   Board.back().returnCoordinates("head")[1]
                                   * SCALER + ySCALER);
 
-    // Moving the snake.
-    Board.back().moveSnake(direction_);
+        // Moving the snake.
+        Board.back().moveSnake(direction_);
 
-    // The third value in deque that function returnCoordinates returns
-    // is the uptated size of the snake.
-    int currentSnakeSize = Board.back().returnCoordinates("head")[2];
+        // The third value in deque that function returnCoordinates returns
+        // is the uptated size of the snake.
+        int currentSnakeSize = Board.back().returnCoordinates("head")[2];
 
-    // If snake size has changed new neckpart is added to bodyparts.
-    // Else the same but last part is deleted since snake has mooved.
-    if (snakeSize_ != currentSnakeSize) {
-        bodyparts.push_front(lastHeadPosition);
-        snakeSize_ += 1;
-    } else {
-        bodyparts.push_front(lastHeadPosition);
-        // Before deleting the last part, square with the same coordinates
-        // is turned back to default color.
-        QBrush whiteBrush(Qt::white);
-        QPen whitePen(Qt::white);
-        scene_->addRect(bodyparts.back().first, bodyparts.back().second,
-                        SCALER, SCALER, whitePen, whiteBrush);
+        // If snake size has changed new neckpart is added to bodyparts.
+        // Else the same but last part is deleted since snake has mooved.
+        if (snakeSize_ != currentSnakeSize) {
+            bodyparts.push_front(lastHeadPosition);
+            snakeSize_ += 1;
+        } else {
+            bodyparts.push_front(lastHeadPosition);
+            // Before deleting the last part, square with the same coordinates
+            // is turned back to default color.
+            QBrush whiteBrush(Qt::white);
+            QPen whitePen(Qt::white);
+            scene_->addRect(bodyparts.back().first, bodyparts.back().second,
+                            SCALER, SCALER, whitePen, whiteBrush);
 
-        bodyparts.pop_back();
-    }
+            bodyparts.pop_back();
+            }
 
-    deque<int> foodCoordinates = Board.back().returnCoordinates("food");
+        deque<int> foodCoordinates = Board.back().returnCoordinates("food");
 
-    // Mooving head by one step.
-    deque<int> headCoordinates = Board.back().returnCoordinates("head");
-    head_->setPos(headCoordinates[0] * SCALER
+        // Mooving head by one step.
+        deque<int> headCoordinates = Board.back().returnCoordinates("head");
+        head_->setPos(headCoordinates[0] * SCALER
             , headCoordinates[1] * SCALER );
 
-    // Same with food but coordinates are the same if snake didn't eat it.
+        // Same with food but coordinates are the same if snake didn't eat it.
+        food_->setPos(foodCoordinates[0] * SCALER,
+                foodCoordinates[1] * SCALER);
 
-    food_->setPos(foodCoordinates[0] * SCALER,
-            foodCoordinates[1] * SCALER);
+        showBody();
 
+        // Score is updated.
+        score_ = bodyparts.size();
+        ui->lcdNumberScore->display(score_);
+        }
+    }
+
+}
+
+void MainWindow::showBody()
+{
     // Painting squares on the board that have the same coordinates as
     // snake's bodyparts.
     for (auto& bodypart : bodyparts) {
@@ -280,12 +280,6 @@ void MainWindow::gameSimulation()
                             greenPen, greenBrush);
         }
     }
-    // Score is updated.
-    score_ = bodyparts.size();
-    ui->lcdNumberScore->display(score_);
-    }
-    }
-
 }
 
 void MainWindow::gameTimer()
@@ -305,6 +299,25 @@ void MainWindow::gameTimer()
 
     ui->lcdNumberTime->display(time);
     seconds_ += 1;
+    }
+}
+
+void MainWindow::endGame()
+{
+    secondTimer_.stop();
+    timer_.stop();
+
+    QFont font("Arial", 45, QFont::Bold);
+    ui->labelGameEnd->setFont(font);
+    // Screen turns green if player won, else turns red.
+    // Text label prints message about the situation.
+    if (Board.back().gameLost()) {
+        ui->labelGameEnd->setText("You lost :(");
+        this->setStyleSheet("QMainWindow { background-color: red; }");
+
+    } else {
+        ui->labelGameEnd->setText("You won!");
+        this->setStyleSheet("QMainWindow { background-color: green; }");
     }
 }
 
