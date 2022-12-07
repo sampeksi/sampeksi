@@ -2,5 +2,8 @@
     <qresource>
         <file alias="rat.png">Resources/rat.png</file>
         <file alias="snakehead.png">Resources/snakehead.png</file>
+	<file alias="snakeheadLeft.png">Resources/snakeheadLeft.png</file>
+	<file alias="snakeheadRight.png">Resources/snakeheadRight.png</file>
+	<file alias="snakeheadUp.png">Resources/snakeheadUp.png</file>
     </qresource>
 </RCC>

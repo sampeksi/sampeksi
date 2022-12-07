@@ -72,6 +72,9 @@ private:
     QGraphicsPixmapItem* head_; // Arrays for graphical items.
     QGraphicsPixmapItem* food_;
 
+    // List where different snakehead images are added.
+    std::deque<QGraphicsPixmapItem*> snakeheads_;
+
     // Container for snake bodyparts and their coordinates
     std::deque<std::pair<int, int>> bodyparts = {};
 
@@ -89,7 +92,7 @@ private:
     int SCALER = 10; // Multiplier to scale graffic gameboard and gameboard
                     // object.
     int xSCALER = 7; // Since head of the snake is unsymmetric object
-    int ySCALER = 3; // Scalers are required to make the tail look realistic.
+    int ySCALER = 6; // Scalers are required to make the tail look realistic.
 
     std::string direction_ = "w"; // Snake's default direction.
 
@@ -114,6 +117,9 @@ private:
 
     // Method to showcase actions.
     void gameSimulation();
+
+    // Changes the snakehead image based on current direction.
+    void selectHeadImage();
 
     // Creates visual snake's body.
     void showBody();

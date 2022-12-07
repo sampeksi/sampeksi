@@ -21,6 +21,7 @@
 #include <QImage>
 #include <QKeyEvent>
 #include <QFont>
+#include <iostream>
 
 using namespace std;
 
@@ -124,7 +125,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 void MainWindow::drawImages()
 {
     // Creating vector with filenames.
-    const vector<string> images = {"rat", "snakehead"};
+    const vector<string> images = {"rat", "snakehead", "snakeheadLeft",
+                                   "snakeheadRight", "snakeheadUp"};
 
     // Defining path for .png files.
     const string PREFIX(":/");
@@ -155,19 +157,33 @@ void MainWindow::drawImages()
     food_->setZValue(2);
     scene_->addItem(rat);
 
-    // Same steps for snake besides the image will appear on the screen
-    // right away.
-    string file2 = PREFIX + images[1] + SUFFIX;
-    QImage snakeheadImage(QString::fromStdString(file2));
-    QGraphicsPixmapItem* snakehead = new QGraphicsPixmapItem(
-                                   QPixmap::fromImage(snakeheadImage));
-    snakehead->setScale(0.0125);
-    snakehead->setFlags(QGraphicsItem::ItemIsMovable);
-    head_ = snakehead;
+    // Creating snakehead for each direction.
+    // Images are added to deque called snakeheads_.
 
-    head_->setZValue(2);
-    head_->setPos(width_ / 2, length_ / 2);
-    scene_->addItem(snakehead);
+    for (auto& image : images) {
+    if (image != "rat") {
+        string file2 = PREFIX + image + SUFFIX;
+        QImage snakeheadImage(QString::fromStdString(file2));
+        QGraphicsPixmapItem* snakehead = new QGraphicsPixmapItem(
+                                   QPixmap::fromImage(snakeheadImage));
+        snakehead->setScale(0.0125);
+        snakehead->setFlags(QGraphicsItem::ItemIsMovable);
+
+        snakehead->setZValue(2);
+
+        snakehead->setPos(-100, -100);
+        scene_->addItem(snakehead);
+
+        snakeheads_.push_back(snakehead);
+        }
+
+    }
+    // Snakes default direction is up, so first image to appear is
+    // snakehead that is pointing up and it is added in the middle of
+    // the gameboard.
+    head_ = snakeheads_[3];
+    head_->setPos(width_ / 2, length_ /2);
+
 }
 
 void MainWindow::playgroundSizeChanged()
@@ -240,12 +256,20 @@ void MainWindow::gameSimulation()
 
         deque<int> foodCoordinates = Board.back().returnCoordinates("food");
 
+        // Moving old snakehead image out of the gameboard
+        head_->setPos(-100, -100);
+
+        // Choosing new snakehead image.
+        selectHeadImage();
+
         // Mooving head by one step.
         deque<int> headCoordinates = Board.back().returnCoordinates("head");
         head_->setPos(headCoordinates[0] * SCALER
             , headCoordinates[1] * SCALER );
 
+
         // Same with food but coordinates are the same if snake didn't eat it.
+
         food_->setPos(foodCoordinates[0] * SCALER,
                 foodCoordinates[1] * SCALER);
 
@@ -257,6 +281,22 @@ void MainWindow::gameSimulation()
         }
     }
 
+}
+
+void MainWindow::selectHeadImage()
+{
+    if (direction_ == "w") {
+        head_ = snakeheads_[3];
+    }
+    else if (direction_ == "s") {
+        head_ = snakeheads_[0];
+    }
+    else if (direction_ == "a") {
+        head_ = snakeheads_[1];
+    }
+    else if (direction_ == "d") {
+        head_ = snakeheads_[2];
+    }
 }
 
 void MainWindow::showBody()
