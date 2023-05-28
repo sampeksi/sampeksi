@@ -52,8 +52,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Setting ranges for slider that are used to change visual gameboard's
     // size
-    ui->horizontalSliderHeight->setRange(0, SLIDER_MAX_VALUE);
-    ui->horizontalSliderWidth->setRange(0, SLIDER_MAX_VALUE);
+    ui->horizontalSliderHeight->setRange(50, SLIDER_MAX_VALUE);
+    ui->horizontalSliderWidth->setRange(50, SLIDER_MAX_VALUE);
 
     // At first gameboard's size is at max.¨
     ui->horizontalSliderHeight->setValue(SLIDER_MAX_VALUE);
@@ -198,7 +198,7 @@ void MainWindow::playgroundSizeChanged()
     // Visual gameboard is changed based on given dimensions.
     ui->graphicsView->setGeometry(0, 0, width_ +2, length_ + 2);
     ui->graphicsView->setScene(scene_);
-    scene_->setSceneRect(0, 0, width_ , length_);
+    scene_->setSceneRect(0, 0, width_ + SCALER , length_ +  SCALER);
 
     ui->graphicsView->setScene(scene_);
     ui->graphicsView->show();
